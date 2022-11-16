@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     borderRadius: WP(1),
     padding: HP(2),
     marginBottom: 20,
+    color: COLOR.blackColor,
   },
   text: {
     fontSize: WP(4),

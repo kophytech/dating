@@ -98,6 +98,11 @@ const PeopleScreen = () => {
           <Text style={styles.text1}>View All</Text>
         </TouchableOpacity>
       </View>
+      <View>
+        <Text style={{color: 'black', top: HP(23), textAlign: 'center'}}>
+          No Person found!!!!!!!!
+        </Text>
+      </View>
     </View>
   );
 };

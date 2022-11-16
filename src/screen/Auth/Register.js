@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: HP(3),
+    color: COLOR.blackColor,
   },
   formContainer: {
     alignSelf: 'center',

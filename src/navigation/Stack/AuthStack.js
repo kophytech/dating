@@ -9,7 +9,10 @@ import Splash from '../../screen/Auth/Splash';
 const Stack = createStackNavigator();
 const AuthStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Stack.Screen name="Splash" component={Splash} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="Login" component={Login} />

@@ -1,26 +1,72 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
 import React from 'react';
 import {COLOR, HP, IMAGE_BODY, WP} from '../../utils/theme';
+import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
 
 const Index = () => {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image
         source={IMAGE_BODY.splash}
         style={styles.image1}
         resizeMode="cover"
       />
       <Text style={styles.name}>{'Omidiora Emmanuel'}</Text>
-      <Text style={styles.name}>{'English'}</Text>
-      <View>
-        <Text>About Me</Text>
-        <Text
-          style={
-            styles.aboutMe
-          }>{`Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      <Text style={styles.name1}>
+        Nigeria
+        <Text style={styles.name2}> Ikeja, Lagos State</Text>
+      </Text>
+      <View style={styles.subContanier}>
+        <View>
+          <Text style={styles.aboutMe1}>About Me</Text>
+          <Text
+            style={
+              styles.aboutMeText
+            }>{`Lorem Ipsum is simply dummy text of tdkdkkks.
         `}</Text>
+        </View>
+
+        {/* Info */}
+
+        <View style={styles.infoContainer}>
+          <Text style={styles.aboutMe1}>My Info</Text>
+          <View style={styles.infoBox}>
+            <Text style={styles.infoText}>Women</Text>
+          </View>
+        </View>
+
+        <View style={styles.cardContainer}>
+          <View>
+            <Card style={{width: WP(40), backgroundColor: COLOR.whiteColor}}>
+              <Card.Title
+                title="People You Liked"
+                titleStyle={{color: COLOR.blackColor}}
+              />
+              <Card.Content>
+                <Text style={[styles.text1, {fontSize: HP(4)}]}>0</Text>
+              </Card.Content>
+            </Card>
+          </View>
+
+          <View>
+            <Card
+              style={{
+                width: WP(40),
+                right: WP(10),
+                backgroundColor: COLOR.whiteColor,
+              }}>
+              <Card.Title
+                title="People You Liked"
+                titleStyle={{color: COLOR.blackColor}}
+              />
+              <Card.Content>
+                <Text style={[styles.text1, {fontSize: HP(4)}]}>0</Text>
+              </Card.Content>
+            </Card>
+          </View>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -32,17 +78,63 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.whiteColor,
   },
   image1: {
-    height: HP(50),
+    height: HP(30),
     width: WP('100%'),
   },
   name: {
     fontSize: HP(3),
     color: COLOR.blackColor,
+    textAlign: 'center',
+    fontWeight: '700',
+    marginVertical: HP(1),
   },
-  aboutMe: {
+
+  name1: {
+    fontSize: HP(2),
+    color: COLOR.blackColor,
+    textAlign: 'center',
+    fontWeight: '700',
+    marginVertical: HP(1),
+  },
+
+  name2: {
+    fontWeight: '300',
+    left: 20,
+    marginHorizontal: WP(5),
+    fontSize: WP(3),
+  },
+  subContanier: {
+    left: WP(5),
+    marginVertical: HP(4),
+  },
+  aboutMe1: {
+    fontSize: HP(3),
+    fontWeight: '500',
+    color: COLOR.blackColor,
+  },
+  aboutMeText: {
     fontSize: WP(4),
     maxWidth: WP(90),
     left: WP(5),
+    color: COLOR.blackColor,
+  },
+  infoBox: {
+    width: WP(20),
+    backgroundColor: 'black',
+    padding: HP(1),
+    borderRadius: WP(2),
+    marginVertical: WP(3),
+  },
+  infoText: {
+    color: COLOR.whiteColor,
+    textAlign: 'center',
+  },
+  cardContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    top: HP(3),
+  },
+  text1: {
     color: COLOR.blackColor,
   },
 });

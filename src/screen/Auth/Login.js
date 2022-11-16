@@ -7,11 +7,13 @@ import Validator from 'validatorjs';
 import en from 'validatorjs/src/lang/en';
 import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../../../Redux/Slice/AuthSlice';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-const Login = () => {
+const Login = props => {
   const [errors, setError] = useState({});
+  const [messageError, setMessageError] = useState();
+  const [loading, setloading] = useState(false);
 
-  console.log(errors, 'errors123');
   const dispatch = useDispatch();
 
   const [value, setValues] = useState({
@@ -27,6 +29,7 @@ const Login = () => {
   };
 
   const onSubmit = async () => {
+    setloading(true);
     const passwordRegex =
       /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
     Validator.register(
@@ -45,21 +48,28 @@ const Login = () => {
     });
 
     if (validation.fails()) {
+      setloading(false);
       setError(validation.errors.all());
     } else {
       dispatch(login(value))
         .unwrap()
         .then(data => {
-          console.log(data, '11111');
+          setloading(false);
+          props.navigation.navigate('Bottom');
         })
         .catch(rejectedValueOrSerializedError => {
-          console.log(rejectedValueOrSerializedError, 'rejecteddd');
+          setloading(false);
+          setMessageError(rejectedValueOrSerializedError.error.message);
         });
     }
   };
 
+  console.log(errors, 'jkjkjjjjj');
+
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView
+      style={styles.container}
+      contentContainerStyle={{paddingBottom: HP(20)}}>
       <View>
         <View style={styles.formContainer}>
           <Text style={styles.text1}>Let's Sign In</Text>
@@ -77,10 +87,16 @@ const Login = () => {
           />
         </View>
         <View style={styles.signUpContainer}>
-          <FormButton text="Sign In" onPress={() => onSubmit()} />
+          <FormButton
+            text="Sign In"
+            onPress={() => onSubmit()}
+            loading={loading}
+          />
         </View>
+
+        <Text style={styles.error1}>{messageError}</Text>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -96,6 +112,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: HP(3),
+    color: COLOR.blackColor,
   },
   formContainer: {
     alignSelf: 'center',
@@ -105,5 +122,11 @@ const styles = StyleSheet.create({
   signUpContainer: {
     alignSelf: 'center',
     bottom: HP(5),
+  },
+  error1: {
+    textAlign: 'center',
+    top: HP(-9),
+    color: COLOR.red,
+    marginVertical: HP(2),
   },
 });

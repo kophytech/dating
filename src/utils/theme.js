@@ -32,8 +32,13 @@ export const IMAGE_BODY = {
   forgot: require('../asset/image/forgot.png'),
   reset: require('../asset/image/reset.png'),
   splash: require('../asset/image/splash1.jpg'),
+  splash2: require('../asset/image/splash2.jpg'),
+  splash3: require('../asset/image/splash3.jpg'),
+
   main: require('../asset/image/chat.png'),
   upload: require('../asset/image/upload.png'),
+  love: require('../asset/image/love.png'),
+  chat2: require('../asset/image/chat2.png'),
 };
 
 export const COLOR = {
