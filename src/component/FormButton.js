@@ -7,10 +7,11 @@ const FormButton = props => {
   return (
     <TouchableOpacity
       style={[styles.buttonContainer, props.bg && {backgroundColor: props.bg}]}
-      onPress={props.onPress}>
+      onPress={props.onPress}
+    >
       {/* <Text style={styles.text1}>{props.text}</Text> */}
       {props.loading ? (
-        <View style={{alignSelf: 'center',top:HP(2)}}>
+        <View style={{alignSelf: 'center', top: HP(2)}}>
           <Bubbles size={10} color="white" />
         </View>
       ) : (
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     height: HP(7),
 
     top: HP(10),
-    backgroundColor: 'red',
+    backgroundColor: COLOR.green,
     borderRadius: HP(3),
     marginVertical: HP(1),
   },

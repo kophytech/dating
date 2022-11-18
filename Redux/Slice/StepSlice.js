@@ -1,6 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
-import MaterialService from '../Services/materialService';
 import StepService from '../Services/StepService';
 
 export const step1Material = createAsyncThunk(

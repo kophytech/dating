@@ -6,9 +6,11 @@ import {
   TouchableOpacity,
   Flatlist,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 import {HP, IMAGE_BODY, WP} from '../utils/theme';
 import InstaStory from 'react-native-insta-story';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useDispatch } from 'react-redux';
 
 const data = [
   {
@@ -56,6 +58,13 @@ const data = [
 ];
 
 const PeopleScreen = () => {
+ const dispatch= useDispatch()
+
+  useLayoutEffect(()=>{
+
+    
+
+  },[])
   return (
     <View style={styles.container}>
       <View style={styles.subcontainer}>
@@ -63,9 +72,11 @@ const PeopleScreen = () => {
           <TouchableOpacity>
             <Image
               source={IMAGE_BODY.main}
-              style={{width: 75, height: 60, alignSelf: 'center'}}
+              style={{width: WP(11), height: WP(9), alignSelf: 'center'}}
             />
           </TouchableOpacity>
+
+          <Ionicons name="ios-notifications-outline" size={35} color="black" />
         </View>
 
         <View style={styles.section2}>
@@ -116,9 +127,11 @@ const styles = StyleSheet.create({
   },
   section1: {
     flexDirection: 'row',
-    alignSelf: 'center',
+
     bottom: HP(7),
-    right: WP(2),
+    left: WP(7),
+    justifyContent: 'space-between',
+    width: WP(80),
   },
   subcontainer: {
     top: HP(10),
