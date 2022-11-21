@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   Flatlist,
 } from 'react-native';
-import React, {useEffect, useLayoutEffect} from 'react';
-import {HP, IMAGE_BODY, WP} from '../utils/theme';
-import InstaStory from 'react-native-insta-story';
+import React from 'react';
+import {COLOR, HP, IMAGE_BODY, WP} from '../../utils/theme';
+// import InstaStory from 'react-native-insta-story';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
+import {randomSlice} from '../../../Redux/Slice/RandomSlice';
+import PeopleList from './PeopleList';
 
 const data = [
   {
@@ -58,13 +60,22 @@ const data = [
 ];
 
 const PeopleScreen = () => {
- const dispatch= useDispatch()
+  const dispatch = useDispatch();
+  const [people, setPeople] = React.useState([]);
 
-  useLayoutEffect(()=>{
+  console.log(people, '11111111');
 
-    
+  React.useLayoutEffect(() => {
+    dispatch(randomSlice())
+      .unwrap()
+      .then(response => {
+        setPeople(response);
+      })
+      .then(err => {
+        // console.log(err, 'erro');
+      });
+  }, []);
 
-  },[])
   return (
     <View style={styles.container}>
       <View style={styles.subcontainer}>
@@ -85,7 +96,7 @@ const PeopleScreen = () => {
           </Text>
         </View>
         <View style={styles.section3}>
-          <InstaStory
+          {/* <InstaStory
             data={data}
             duration={10}
             onStart={item => console.log(item)}
@@ -96,7 +107,7 @@ const PeopleScreen = () => {
               </View>
             }
             style={{marginTop: 30}}
-          />
+          /> */}
         </View>
       </View>
 
@@ -105,14 +116,21 @@ const PeopleScreen = () => {
           <Text>Near You</Text>
         </View>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => console.log('/s')}>
           <Text style={styles.text1}>View All</Text>
         </TouchableOpacity>
       </View>
+
       <View>
-        <Text style={{color: 'black', top: HP(23), textAlign: 'center'}}>
-          No Person found!!!!!!!!
-        </Text>
+        {people?.length == 0 ? (
+          <Text style={{color: 'black', top: HP(23), textAlign: 'center'}}>
+            No Friends
+          </Text>
+        ) : (
+          <View style={styles.people}>
+            <PeopleList people={people} />
+          </View>
+        )}
       </View>
     </View>
   );
@@ -158,7 +176,10 @@ const styles = StyleSheet.create({
     left: HP(5),
   },
   text1: {
-    color: 'pink',
+    color: COLOR.green,
     fontWeight: 'bold',
+  },
+  people: {
+    marginBottom: HP(6),
   },
 });

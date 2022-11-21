@@ -39,6 +39,7 @@ export const IMAGE_BODY = {
   upload: require('../asset/image/upload.png'),
   love: require('../asset/image/love.png'),
   chat2: require('../asset/image/chat2.png'),
+  avatar: require('../asset/image/avatar.png'),
 };
 
 export const COLOR = {

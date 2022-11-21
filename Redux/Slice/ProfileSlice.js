@@ -1,15 +1,16 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import profileService from '../Services/ProfileServices';
 import randomService from '../Services/RandomServices';
 
 import StepService from '../Services/StepService';
 
-export const randomSlice = createAsyncThunk(
-  'material/random',
+export const profileSlice = createAsyncThunk(
+  'material/profile',
   async thunkAPI => {
     try {
-      return await randomService.randomPerson();
+      return await profileService.profilePerson();
     } catch (error) {
-      console.log(error.response.data, 'er11ror');
+   
       const {message} = error;
       // console.log(error.response.data || message)
 
@@ -23,7 +24,7 @@ export const randomSlice = createAsyncThunk(
 );
 
 const initialState = {
-  random: [],
+  profile: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -33,27 +34,26 @@ const initialState = {
 const materialSlice = createSlice({
   name: 'material',
   initialState,
-
   extraReducers: {
-    [randomSlice.pending]: (state, action) => {
+    [profileSlice.pending]: (state, action) => {
       state.isLoading = true;
     },
-    [randomSlice.fulfilled]: (state, action) => {
+    [profileSlice.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
-      state.random = action.payload;
+      state.profile = action.payload;
     },
-    [randomSlice.rejected]: (state, action) => {
+    [profileSlice.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
     },
 
-    [randomSlice.pending]: (state, action) => {
+    [profileSlice.pending]: (state, action) => {
       state.isLoading = true;
     },
   },
 });
 
-const {reducer} = randomSlice;
+const {reducer} = profileSlice;
 export default reducer;

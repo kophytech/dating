@@ -8,9 +8,10 @@ const RootNavgiation = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-      }}>
+      }}
+    >
       <Stack.Screen name="Auth" component={AuthStack} />
-      <Stack.Screen name="Bottom" component={BottomStack} />
+      {/* <Stack.Screen name="Bottom" component={BottomStack} /> */}
 
       {/*  */}
     </Stack.Navigator>

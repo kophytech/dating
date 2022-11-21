@@ -1,17 +1,72 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
 import React from 'react';
-import {HP} from '../../utils/theme';
+import {HP, WP} from '../../utils/theme';
+import ChatHeader from './ChatHeader';
+
+const message = [
+  {
+    id: 1,
+    text: 'Hello, I need friend',
+    sender: false,
+  },
+  {
+    id: 2,
+    text: 'Hello, I need friendddjabdjbajbjbj akdnkankd jbann',
+    sender: false,
+  },
+  {
+    id: 3,
+    text: 'Hello, I need friend',
+    sender: true,
+  },
+  {
+    id: 4,
+    text: 'Hello, I need friend',
+    sender: false,
+  },
+];
 
 const ChatScreen = () => {
   return (
     <View>
-      <Text style={{color: 'black', top: HP(23), textAlign: 'center'}}>
-        No Chat found!!!!!!!!
-      </Text>
+      {/* <ChatHeader item="" /> */}
+      <FlatList
+        data={message}
+        contentContainerStyle={{
+          width: WP(90),
+
+          paddingBottom: HP(30),
+        }}
+        ListHeaderComponent={<ChatHeader item="" />}
+        renderItem={({item}) => {
+          return (
+            <View style={styles(item).message}>
+              <Text style={styles(item).text}>{item.text}</Text>
+            </View>
+          );
+        }}
+      />
     </View>
   );
 };
 
 export default ChatScreen;
 
-const styles = StyleSheet.create({});
+const styles = props =>
+  StyleSheet.create({
+    message: {
+      alignSelf: props.sender ? 'flex-end' : 'flex-start',
+      left: WP(3),
+      top: HP(6),
+    },
+    text: {
+      textAlign: props.sender ? 'right' : 'left',
+      backgroundColor: props.sender ? 'green' : 'yellow',
+      maxWidth: WP(40),
+      marginVertical: WP(5),
+      padding: WP(4),
+      borderRadius: WP(60),
+      marginLeft: props.sender ? WP(6) : WP(1),
+      
+    },
+  });

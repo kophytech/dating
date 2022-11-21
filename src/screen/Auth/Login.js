@@ -8,6 +8,7 @@ import en from 'validatorjs/src/lang/en';
 import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../../../Redux/Slice/AuthSlice';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = props => {
   const [errors, setError] = useState({});
@@ -30,8 +31,7 @@ const Login = props => {
 
   const onSubmit = async () => {
     setloading(true);
-    const passwordRegex =
-      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
+    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
     Validator.register(
       'strict',
       value => passwordRegex.test(value),
@@ -53,9 +53,10 @@ const Login = props => {
     } else {
       dispatch(login(value))
         .unwrap()
-        .then(data => {
+        .then(async data => {
+          const token = await AsyncStorage.setItem('@token', data?.token);
           setloading(false);
-          props.navigation.navigate('Bottom');
+         props.navigation.navigate('Bottom');
         })
         .catch(rejectedValueOrSerializedError => {
           setloading(false);
@@ -69,7 +70,8 @@ const Login = props => {
   return (
     <KeyboardAwareScrollView
       style={styles.container}
-      contentContainerStyle={{paddingBottom: HP(20)}}>
+      contentContainerStyle={{paddingBottom: HP(20)}}
+    >
       <View>
         <View style={styles.formContainer}>
           <Text style={styles.text1}>Let's Sign In</Text>

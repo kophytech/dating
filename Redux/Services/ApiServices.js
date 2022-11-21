@@ -9,10 +9,10 @@ const instance = Axios.create({
 
 instance.interceptors.request.use(
   async config => {
-    const token = await AsyncStorage.getItem('user');
-    console.log(token, 'token');
+    const token = await AsyncStorage.getItem('@token');
+    console.log(token, 'toksen');
     if (token) {
-      config.headers.Authorization = token;
+      config.headers.Authorization = 'Bearer ' + token;
     }
     config.headers.Accept = '*/*';
     return config;
