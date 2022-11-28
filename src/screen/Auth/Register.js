@@ -1,7 +1,14 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+} from 'react-native';
 import React, {useState, useEFfect} from 'react';
 import FormInput from '../../component/FormInput';
-import {HP, COLOR} from '../../utils/theme';
+import {HP, COLOR, IMAGE_BODY} from '../../utils/theme';
 import FormButton from '../../component/FormButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Validator from 'validatorjs';
@@ -11,8 +18,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {register} from '../../../Redux/Slice/AuthSlice';
 
 Validator.setMessages('en', en);
-const Register = () => {
+const Register = props => {
   const [errors, setError] = useState({});
+  const [loading, setloading] = useState(false);
+  const [backendError, setBackendError] = useState({});
 
   console.log(errors, 'errors123');
   const dispatch = useDispatch();
@@ -34,8 +43,8 @@ const Register = () => {
   };
 
   const onSubmit = async () => {
-    const passwordRegex =
-      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
+    setloading(true);
+    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
     Validator.register(
       'strict',
       value => passwordRegex.test(value),
@@ -58,23 +67,31 @@ const Register = () => {
     });
 
     if (validation.fails()) {
+      setloading(false);
       setError(validation.errors.all());
     } else {
+      setloading(false);
       dispatch(register(value))
         .unwrap()
-        .then(data => {
-          console.log(data, '11111');
+        .then(async data => {
+          const token = await AsyncStorage.setItem('@token', data?.token);
+          props.navigation.navigate('Step1');
         })
         .catch(rejectedValueOrSerializedError => {
-          console.log(rejectedValueOrSerializedError, 'rejecteddd');
+          setBackendError(rejectedValueOrSerializedError);
         });
     }
   };
 
+  console.log('====================================');
+  console.log(backendError);
+  console.log('====================================');
   return (
     <KeyboardAwareScrollView
       style={styles.container}
-      contentContainerStyle={{paddingBottom: HP(20)}}>
+      contentContainerStyle={{paddingBottom: HP(20)}}
+    >
+      <Image source={IMAGE_BODY.major} style={styles.img} />
       <View>
         <View style={styles.formContainer}>
           <Text style={styles.text1}>Create Your Account.</Text>
@@ -115,9 +132,26 @@ const Register = () => {
             showIcon={true}
           />
         </View>
-        <View style={styles.signUpContainer}>
-          <FormButton text="Sign Up" onPress={() => onSubmit()} />
+        <View style={{alignSelf: 'center'}}>
+          <Text style={styles.error}>{backendError?.error?.email}</Text>
+          <Text style={styles.error}>{backendError?.error?.username}</Text>
         </View>
+        <View style={styles.signUpContainer}>
+          <FormButton
+            text="Sign Up"
+            onPress={() => onSubmit()}
+            loading={loading}
+          />
+        </View>
+
+        <TouchableOpacity
+          style={styles.loginContainer}
+          onPress={() => props.navigation.navigate('Login')}
+        >
+          <Text style={{color: COLOR.green, fontWeight: 'bold'}}>
+            Click to Login
+          </Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAwareScrollView>
   );
@@ -145,5 +179,16 @@ const styles = StyleSheet.create({
   signUpContainer: {
     alignSelf: 'center',
     bottom: HP(5),
+  },
+  loginContainer: {
+    alignSelf: 'center',
+    marginTop: HP(12),
+  },
+  img: {
+    alignSelf: 'center',
+    top: HP(5),
+  },
+  error: {
+    color: COLOR.red,
   },
 });

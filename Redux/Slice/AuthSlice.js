@@ -24,7 +24,8 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   try {
     return await AuthService.login(user);
   } catch (error) {
-    // console.log(error, 'error');
+  
+    console.log(error, 'error');
     const {message} = error;
     // console.log(error.response.data || message)
 
@@ -33,29 +34,6 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     return thunkAPI.rejectWithValue(error.response.data || message);
   }
 });
-
-export const RefreshTokenAction = createAsyncThunk(
-  'auth/refreshToken',
-  async (user, thunkAPI) => {
-    try {
-      console.log(
-        await AuthService.refreshTokenApi(),
-        ' await AuthService.refreshTokenApi(); await AuthService.refreshTokenApi();',
-      );
-      return await AuthService.refreshTokenApi();
-    } catch (error) {
-      console.log(error, 'eeeeeeeeee');
-      // console.log(error, 'error');
-      const {message} = error;
-
-      // console.log(error.response.data || message)
-
-      // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
-
-      return thunkAPI.rejectWithValue(error.response.data || message);
-    }
-  },
-);
 
 export const ResetPasswordAction = createAsyncThunk(
   'auth/reset_password',

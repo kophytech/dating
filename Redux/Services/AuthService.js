@@ -23,7 +23,8 @@ const login = userData => {
 const refreshTokenApi = async () => {
   let tokens = await AsyncStorage.getItem('refreshToken');
   return axios({
-    url: 'https://demo-server-quotesconnect.herokuapp.com/api/v1.1/client/login',
+    url:
+      'https://demo-server-quotesconnect.herokuapp.com/api/v1.1/client/login',
     method: 'get',
     headers: {
       refreshToken:
@@ -52,7 +53,7 @@ const refreshTokenApi = async () => {
 };
 
 const reset_password_api = email => {
-  return axios.post(API_URL + 'reset/mail', email).then(response => {
+  return axios.post(API_URL + 'forgot', email).then(response => {
     console.log(response, 'reset password');
   });
 };

@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {COLOR, IMAGE_BODY, WP} from '../../utils/theme';
+import {COLOR, HP, IMAGE_BODY, WP} from '../../utils/theme';
 import FormInput from '../../component/FormInput';
 import FormButton from '../../component/FormButton';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,13 +9,10 @@ import en from 'validatorjs/src/lang/en';
 
 const ForgotPassword = () => {
   const [errors, setError] = useState({});
-
-  console.log(errors, 'errors123');
   const dispatch = useDispatch();
 
   const [value, setValues] = useState({
     identifier: '',
-    password: '',
   });
 
   const handleInputChange = (inputName, inputValue) => {
@@ -26,21 +23,13 @@ const ForgotPassword = () => {
   };
 
   const onSubmit = async () => {
-    const passwordRegex =
-      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
-    Validator.register(
-      'strict',
-      value => passwordRegex.test(value),
-      'password must contain at least one  letter, number and a special character',
-    );
+
     let rules = {
       identifier: 'required|email',
-      password: 'required',
     };
 
     let validation = new Validator(value, rules, {
       'required.identifier': 'The Email field is required.',
-      'required.password': 'The Password field is required.',
     });
 
     if (validation.fails()) {
@@ -59,7 +48,7 @@ const ForgotPassword = () => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={IMAGE_BODY.forgot} />
+        <Image source={IMAGE_BODY.signin} style={styles.img} />
         <View style={styles.subContainer}>
           <FormInput
             label="Email"
@@ -92,5 +81,10 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     left: WP(-3),
+  },
+  img: {
+    width: WP(50),
+    height: HP(30),
+    alignSelf: 'center',
   },
 });

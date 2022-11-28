@@ -6,7 +6,7 @@ import {Bubbles, DoubleBounce, Bars, Pulse} from 'react-native-loader';
 const FormButton = props => {
   return (
     <TouchableOpacity
-      style={[styles.buttonContainer, props.bg && {backgroundColor: props.bg}]}
+      style={[styles.buttonContainer,props.btnStyle, props.bg && {backgroundColor: props.bg}]}
       onPress={props.onPress}
     >
       {/* <Text style={styles.text1}>{props.text}</Text> */}

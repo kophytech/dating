@@ -8,7 +8,46 @@ export const step1Material = createAsyncThunk(
     try {
       return await StepService.postStep1Service(data);
     } catch (error) {
-      console.log(error, 'error');
+      console.log(error.response.data, 'e9999ror');
+      const {message} = error;
+      // console.log(error.response.data || message)
+
+      // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
+
+      return thunkAPI.rejectWithValue(
+        error.response.data.error[0].msg || message,
+      );
+    }
+  },
+);
+
+export const step2Material = createAsyncThunk(
+  'material/step2',
+  async (data, thunkAPI) => {
+    try {
+      return await StepService.postStep2Service(data);
+    } catch (error) {
+      const {message} = error;
+      // console.log(error.response.data || message)
+
+      // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
+
+      return thunkAPI.rejectWithValue(
+        error.response.data.error[0].msg || message,
+      );
+    }
+  },
+);
+
+export const step3Material = createAsyncThunk(
+  'material/step3',
+  async (data, thunkAPI) => {
+    try {
+      return await StepService.postStep3Service(data);
+    } catch (error) {
+      console.log('====================================');
+      console.log(error.response);
+      console.log('====================================');
       const {message} = error;
       // console.log(error.response.data || message)
 

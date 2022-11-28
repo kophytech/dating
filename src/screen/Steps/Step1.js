@@ -5,6 +5,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import React, {use} from 'react';
 import {COLOR, HP, IMAGE_BODY, WP} from '../../utils/theme';
@@ -13,32 +14,67 @@ import MainButton from '../../component/MainButton';
 import * as ImagePicker from 'react-native-image-picker';
 import {useDispatch} from 'react-redux';
 import {step1Material} from '../../../Redux/Slice/StepSlice';
+import {showMessage} from 'react-native-flash-message';
 
-const Step1 = () => {
+const Step1 = props => {
   const [response, setResponse] = React.useState([]);
   const [image, setSmage] = React.useState(false);
   const [type, setType] = React.useState('');
   const dispatch = useDispatch();
+  const [loading, setLoading] = React.useState(false);
 
-  const onButtonPress = React.useCallback((type, options) => {
-    if (type === 'capture') {
-      ImagePicker.launchCamera(options, setResponse);
-      setSmage(true);
-    } else {
-      ImagePicker.launchImageLibrary(options, setResponse);
-      setSmage(true);
-    }
-  }, []);
+  const onButtonPress = () => {
+    ImagePicker.launchImageLibrary(
+      {
+        title: 'Choose an Image',
+        base64: true,
+        includeBase64: true,
+      },
+      response => {
+        setResponse(response);
+      },
+    );
+    setSmage(true);
+  };
 
   const onUploadImage = () => {
-    dispatch(step1Material(response));
+    setLoading(true);
+    if (response.length == 0) {
+      showMessage({
+        message: 'Please Upload an image ',
+      });
+    } else {
+      let value = {...response?.assets};
+
+      dispatch(
+        step1Material({
+          avatar:
+            'data' +
+            ':' +
+            value?.[0]?.type +
+            ';' +
+            'base64,' +
+            value?.[0]?.base64,
+        }),
+      )
+        .unwrap()
+        .then(item => {
+          props.navigation.navigate('Step2');
+          setLoading(false);
+        })
+        .catch(err => {
+          console.log(err, 'error');
+          setLoading(false);
+        });
+    }
   };
 
   //
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{paddingBottom: HP(50)}}>
+      contentContainerStyle={{paddingBottom: HP(50)}}
+    >
       <View style={{top: HP(10)}}>
         <View style={styles.image}>
           <Image source={IMAGE_BODY.main} />
@@ -50,8 +86,9 @@ const Step1 = () => {
             maxWidth: WP(70),
             textAlign: 'center',
             left: HP(8),
-          }}>
-          Flash that sleek smile yours to decorate your profile
+          }}
+        >
+          Upload your picture to naijaconnect..
         </Text>
         <TouchableOpacity
           style={styles.section1}
@@ -61,24 +98,26 @@ const Step1 = () => {
               includeBase64: false,
               maxHeight: 200,
               maxWidth: 200,
+              base64: true,
             })
-          }>
+          }
+        >
           {response?.assets?.length > 0 || image == true ? (
             <View style={styles.imageContainer}>
               <View>
-                {response?.assets?.map(item => (
-                  <>
+                {response?.assets?.map((item, index) => (
+                  <View key={index}>
                     <Image
                       source={{
                         uri: item?.uri,
                       }}
-                      style={{height: 100, width: 150}}
+                      style={{height: HP(20), width: WP(80)}}
                       resizeMode="cover"
                     />
-                    <Text style={{maxWidth: WP(50), color: COLOR.blackColor}}>
+                    {/* <Text style={{maxWidth: WP(50), color: COLOR.blackColor}}>
                       {item?.fileName}
-                    </Text>
-                  </>
+                    </Text> */}
+                  </View>
                 ))}
               </View>
             </View>
@@ -87,27 +126,36 @@ const Step1 = () => {
               <View style={{right: 100}}>
                 <Image source={IMAGE_BODY.upload} style={styles.image2} />
               </View>
-
-              <View>
-                <Text style={styles.text1}>OR</Text>
-              </View>
             </View>
           )}
         </TouchableOpacity>
 
         <View style={styles.btnContainer}>
-          <MainButton
-            text="Upload From Gallery"
-            onPress={() =>
-              onButtonPress(type, {
-                mediaType: 'photo',
-                includeBase64: false,
-                maxHeight: 200,
-                maxWidth: 200,
-              })
-            }
-          />
-          <MainButton text="Continue" bg={COLOR.primary} />
+          {response?.assets?.length > 0 ? (
+            <>
+              <MainButton
+                text="Continue"
+                bg={COLOR.primary}
+                loading={loading}
+                onPress={() => onUploadImage()}
+              />
+            </>
+          ) : (
+            <>
+              <MainButton
+                text="Upload From Gallery"
+                onPress={() =>
+                  onButtonPress(type, {
+                    mediaType: 'photo',
+                    includeBase64: true,
+                    maxHeight: 200,
+                    maxWidth: 200,
+                    base64: true,
+                  })
+                }
+              />
+            </>
+          )}
         </View>
       </View>
     </ScrollView>

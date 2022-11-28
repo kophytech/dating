@@ -1,39 +1,79 @@
-import {StyleSheet, Text, View, ImageBackground} from 'react-native';
+import {StyleSheet, Text, View, ImageBackground, Image} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {HP, IMAGE_BODY} from '../../utils/theme';
+import {HP, IMAGE_BODY, WP} from '../../utils/theme';
 import {ImageCarousel, ImageSlider} from 'react-native-image-slider-banner';
 import Icon from 'react-native-vector-icons/Entypo';
 import FormButton from '../../component/FormButton';
-import {useNavigation} from '@react-navigation/native';
+import {CommonActions, useNavigation} from '@react-navigation/native';
+import preferences from '../../utils/preferences';
 
 const Splash = () => {
+  useEffect(() => {
+    preferences
+      ._getItem('onboarding')
+      .then(value => {
+        if (value == '1') {
+          preferences
+            ._getItem('user')
+            .then(async session => {
+              console.log({session});
+              if (session) {
+                navigation.dispatch({
+                  ...CommonActions.reset({
+                    index: 0,
+                    routes: [
+                      {
+                        name: 'Bottom',
+                        state: {
+                          routes: [
+                            {
+                              name: 'Bottom',
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  }),
+                });
+              } else {
+                navigation.dispatch({
+                  ...CommonActions.reset({
+                    index: 0,
+                    routes: [
+                      {
+                        name: 'Auth',
+                        state: {
+                          routes: [
+                            {
+                              name: 'Login',
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  }),
+                });
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        } else {
+          navigation.navigate('Onboarding');
+        }
+      })
+      .catch(error => {
+        console.log(error,'911');
+      });
+  }, []);
+
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <ImageSlider
-        data={[
-          {img: IMAGE_BODY.splash},
-          {img: IMAGE_BODY.splash2},
-          {img: IMAGE_BODY.splash3},
-        ]}
-        localImg
-        autoPlay={true}
-        caroselImageStyle={{resizeMode: 'cover'}}
-        onItemChanged={item => console.log('item', item)}
-        closeIconColor="#fff"
+      <Image
+        source={IMAGE_BODY.splash0}
+        style={{width: WP('100'), height: HP('100%')}}
       />
-      {/* <ImageBackground
-        source={IMAGE_BODY.splash}
-        style={styles.image}></ImageBackground> */}
-      <Text style={styles.text1}>Naijaconnect</Text>
-      <View style={styles.form}>
-        <FormButton
-          text="Register"
-          bg="black"
-          onPress={() => navigation.navigate('Register')}
-        />
-        <FormButton text="Login" onPress={() => navigation.navigate('Login')} />
-      </View>
     </View>
   );
 };
@@ -43,7 +83,7 @@ export default Splash;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#65A612',
   },
   image: {
     height: '70%',

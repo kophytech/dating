@@ -7,6 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch} from 'react-redux';
 import {LikeServices} from '../../../Redux/Slice/LikeSlice';
+import {showMessage} from 'react-native-flash-message';
 
 const ModalView = ({user}) => {
   const dispatch = useDispatch();
@@ -15,16 +16,26 @@ const ModalView = ({user}) => {
     dispatch(LikeServices(id))
       .unwrap()
       .then(response => {
-        console.log(response, 'jjjjjj');
+        showMessage({
+          message: 'User Like Successfullyy',
+          type: 'info',
+        });
       })
       .catch(error => {
         console.log(error, 'kkkkkkk');
       });
   };
 
+  const onMessage = () => {
+    showMessage({
+      message: 'You do not have enough credit',
+      type: 'info',
+    });
+  };
+
   return (
     <View style={styles.ModalViewContainer}>
-      <Modal isVisible={false}>
+      <Modal isVisible={true}>
         <View style={{backgroundColor: 'white', top: HP(-10), height: HP(60)}}>
           <View>
             <Image

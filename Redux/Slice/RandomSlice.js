@@ -9,19 +9,39 @@ export const randomSlice = createAsyncThunk(
     try {
       return await randomService.randomPerson();
     } catch (error) {
-      console.log(error.response.data, 'er11ror');
       const {message} = error;
-      // console.log(error.response.data || message)
 
       // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
 
       return thunkAPI.rejectWithValue(
-        error.response.data.error[0].msg || message,
+        error.response || error.response.data.error[0].msg,
       );
     }
   },
 );
 
+export const filterSlice = createAsyncThunk(
+  'material/random',
+  async thunkAPI => {
+    try {
+      return await randomService.filterPerson();
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      console.log(message, '1111111111111');
+      // console.log(error.response.data || message)
+
+      // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);
 const initialState = {
   random: [],
   isError: false,

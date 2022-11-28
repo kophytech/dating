@@ -18,6 +18,7 @@ import {store} from './Redux/Store/Store';
 import BottomStack from './src/navigation/Bottom/Index';
 import StepStack from './src/navigation/Stack/StepStack';
 import RootNavgiation from './src/navigation/RootNavgiation';
+import FlashMessage from 'react-native-flash-message';
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
 
@@ -28,6 +29,7 @@ const App = () => {
         <NavigationContainer>
           <RootNavgiation />
         </NavigationContainer>
+        <FlashMessage position="top" />
       </PaperProvider>
     </Provider>
   );

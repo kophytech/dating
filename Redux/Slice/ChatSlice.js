@@ -1,11 +1,11 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import ChatService from '../Services/ChatServices';
 import LikingService from '../Services/LikeServices';
 
-export const LikeServices = createAsyncThunk('Liking/liked', async thunkAPI => {
+export const getPrevious = createAsyncThunk('Liking/liked', async thunkAPI => {
   try {
-    return await LikingService.likePerson(id);
+    return await ChatService.previousMessages();
   } catch (error) {
-    console.log(error, 'er11ro11r');
     const {message} = error;
     console.log(error.response.data || message);
 
@@ -17,13 +17,13 @@ export const LikeServices = createAsyncThunk('Liking/liked', async thunkAPI => {
   }
 });
 
-export const dislikeServices = createAsyncThunk(
+export const chatWithOtherUser = createAsyncThunk(
   'Liking/liked',
   async thunkAPI => {
     try {
-      return await LikingService.dislikelikePerson(id);
+      console.log(data, '303030303030');
+      return await ChatService.chatWithOtherServices(data);
     } catch (error) {
-      console.log(error, 'er11ro11r');
       const {message} = error;
       console.log(error.response.data || message);
 
@@ -35,9 +35,8 @@ export const dislikeServices = createAsyncThunk(
     }
   },
 );
-
 const initialState = {
-  like: [],
+  chat: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -45,28 +44,28 @@ const initialState = {
 };
 
 const materialSlice = createSlice({
-  name: 'Liking',
+  name: 'Chat',
   initialState,
   extraReducers: {
-    [LikeServices.pending]: (state, action) => {
+    [getPrevious.pending]: (state, action) => {
       state.isLoading = true;
     },
-    [LikeServices.fulfilled]: (state, action) => {
+    [getPrevious.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
-      state.like = action.payload;
+      state.chat = action.payload;
     },
-    [LikeServices.rejected]: (state, action) => {
+    [getPrevious.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
     },
 
-    [LikeServices.pending]: (state, action) => {
+    [getPrevious.pending]: (state, action) => {
       state.isLoading = true;
     },
   },
 });
 
-const {reducer} = LikeServices;
+const {reducer} = getPrevious;
 export default reducer;

@@ -18,15 +18,18 @@ const FormInput = props => {
       <Text style={styles.text}>{props.label}</Text>
       <TextInput
         placeholder={props.placeholder}
-        style={styles.input}
+        style={[styles.input, props.inputStyle]}
         autoCapitalize="none"
         onChangeText={props.onChangeText}
+        keyboardType={props.keyboardType}
+        placeholderTextColor="black"
       />
       {props.showIcon && (
         <>
           <TouchableOpacity
             style={styles.eye}
-            onPress={() => setShowPassword(!showPassword)}>
+            onPress={() => setShowPassword(!showPassword)}
+          >
             <Feather name={showPassword ? 'eye' : 'eye-off'} />
           </TouchableOpacity>
         </>
@@ -41,7 +44,8 @@ const FormInput = props => {
               color: COLOR.red,
               marginVertical: HP(1),
               maxWidth: WP(80),
-            }}>
+            }}
+          >
             {props.error}
           </Animatable.Text>
         </>
@@ -55,7 +59,7 @@ export default FormInput;
 const styles = StyleSheet.create({
   input: {
     width: WP(90),
-    borderColor: 'blue',
+    borderColor: COLOR.green,
     borderWidth: HP(0.1),
     borderRadius: WP(1),
     padding: HP(2),

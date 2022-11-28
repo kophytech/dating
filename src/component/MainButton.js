@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import React from 'react';
 import {COLOR, HP, WP} from '../utils/theme';
 
@@ -15,15 +22,25 @@ const MainButton = props => {
         marginVertical: HP(3),
         borderWidth: 1,
         borderColor: props.borderColor ? props.borderColor : 'transparent',
-      }}>
-      <Text
-        style={{
-          textAlign: 'center',
-          color: props.color ? props.color : COLOR.whiteColor,
-          fontWeight: '300',
-        }}>
-        {props.text}
-      </Text>
+      }}
+    >
+      {props.loading ? (
+        <>
+          <ActivityIndicator color={COLOR.whiteColor} size={'large'} />
+        </>
+      ) : (
+        <>
+          <Text
+            style={{
+              textAlign: 'center',
+              color: props.color ? props.color : COLOR.whiteColor,
+              fontWeight: '300',
+            }}
+          >
+            {props.text}
+          </Text>
+        </>
+      )}
     </TouchableOpacity>
   );
 };

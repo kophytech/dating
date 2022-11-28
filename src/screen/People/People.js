@@ -59,20 +59,19 @@ const data = [
   },
 ];
 
-const PeopleScreen = () => {
+const PeopleScreen = props => {
   const dispatch = useDispatch();
   const [people, setPeople] = React.useState([]);
-
-  console.log(people, '11111111');
 
   React.useLayoutEffect(() => {
     dispatch(randomSlice())
       .unwrap()
       .then(response => {
+        console.log(response, '1200000000000000 ');
         setPeople(response);
       })
       .then(err => {
-        // console.log(err, 'erro');
+        console.log(err.response, 'e000000rro');
       });
   }, []);
 
@@ -104,7 +103,7 @@ const PeopleScreen = () => {
             customSwipeUpComponent={
               <View>
                 <Text>Swipe</Text>
-              </View>
+              </View>x
             }
             style={{marginTop: 30}}
           /> */}
@@ -113,10 +112,10 @@ const PeopleScreen = () => {
 
       <View style={styles.section4}>
         <View>
-          <Text>Near You</Text>
+          <Text style={{color: 'black', right: HP(3)}}>Near You</Text>
         </View>
 
-        <TouchableOpacity onPress={() => console.log('/s')}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Discover')}>
           <Text style={styles.text1}>View All</Text>
         </TouchableOpacity>
       </View>

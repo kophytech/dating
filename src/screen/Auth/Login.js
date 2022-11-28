@@ -1,7 +1,7 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import FormInput from '../../component/FormInput';
-import {HP, COLOR} from '../../utils/theme';
+import {HP, COLOR, IMAGE_BODY, WP} from '../../utils/theme';
 import FormButton from '../../component/FormButton';
 import Validator from 'validatorjs';
 import en from 'validatorjs/src/lang/en';
@@ -18,7 +18,7 @@ const Login = props => {
   const dispatch = useDispatch();
 
   const [value, setValues] = useState({
-    identifier: '',
+    email: '',
     password: '',
   });
 
@@ -38,12 +38,12 @@ const Login = props => {
       'password must contain at least one  letter, number and a special character',
     );
     let rules = {
-      identifier: 'required|email',
+      email: 'required|email',
       password: 'required',
     };
 
     let validation = new Validator(value, rules, {
-      'required.identifier': 'The Email field is required.',
+      'required.email': 'The Email field is required.',
       'required.password': 'The Password field is required.',
     });
 
@@ -51,12 +51,17 @@ const Login = props => {
       setloading(false);
       setError(validation.errors.all());
     } else {
-      dispatch(login(value))
+      dispatch(
+        login({
+          identifier: value.email,
+          password: value.email,
+        }),
+      )
         .unwrap()
         .then(async data => {
           const token = await AsyncStorage.setItem('@token', data?.token);
           setloading(false);
-         props.navigation.navigate('Bottom');
+          props.navigation.navigate('Bottom');
         })
         .catch(rejectedValueOrSerializedError => {
           setloading(false);
@@ -74,11 +79,14 @@ const Login = props => {
     >
       <View>
         <View style={styles.formContainer}>
-          <Text style={styles.text1}>Let's Sign In</Text>
+          <Image source={IMAGE_BODY.signin} style={styles.img} />
+          {/* <Text style={styles.text1}>Let's Sign In</Text> */}
+
           <FormInput
             label="Email"
-            onChangeText={value => handleInputChange('identifier', value)}
-            error={errors.identifier}
+            onChangeText={value => handleInputChange('email', value)}
+            error={errors.email}
+            inputStyle={styles.inputStyle}
           />
           <FormInput
             label="Password"
@@ -86,6 +94,7 @@ const Login = props => {
             onChangeText={value => handleInputChange('password', value)}
             error={errors.password}
             showIcon={true}
+            inputStyle={styles.inputStyle}
           />
         </View>
         <View style={styles.signUpContainer}>
@@ -93,7 +102,29 @@ const Login = props => {
             text="Sign In"
             onPress={() => onSubmit()}
             loading={loading}
+            bg={COLOR.lightGrey}
           />
+        </View>
+        <View style={styles.subButton}>
+          <TouchableOpacity
+            style={styles.forgot}
+            onPress={() => props.navigation.navigate('Register')}
+          >
+            <Text style={styles.text3}>Click to Register</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.forgot}
+            onPress={() => props.navigation.navigate('ForgotPassword')}
+          >
+            <Text style={styles.text4}> Forgot Password?</Text>
+          </TouchableOpacity>
+          {/* <FormButton
+            text="Register"
+            btnStyle={{width: WP(40)}}
+            bg={COLOR.Blue2}
+            onPress={() => props.navigation.navigate('Register')}
+          /> */}
         </View>
 
         <Text style={styles.error1}>{messageError}</Text>
@@ -127,8 +158,35 @@ const styles = StyleSheet.create({
   },
   error1: {
     textAlign: 'center',
-    top: HP(-9),
+    top: HP(-12),
     color: COLOR.red,
     marginVertical: HP(2),
+  },
+  img: {
+    width: WP(60),
+    height: HP(30),
+    alignSelf: 'center',
+  },
+  inputStyle: {borderRadius: WP(3), borderColor: COLOR.green},
+  register: {
+    top: HP(5),
+  },
+  subButton: {
+    flexDirection: 'row',
+    width: WP(60),
+    alignSelf: 'center',
+    right: HP(5),
+    justifyContent: 'space-between',
+    top: HP(9),
+  },
+  forgot: {
+    left: WP(5),
+  },
+  text3: {
+    color: 'black',
+  },
+  text4: {
+    marginLeft: WP(15),
+    color: 'black',
   },
 });

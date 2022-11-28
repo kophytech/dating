@@ -31,6 +31,7 @@ export const NAIRA_SYSMBOL = '$';
 export const IMAGE_BODY = {
   forgot: require('../asset/image/forgot.png'),
   reset: require('../asset/image/reset.png'),
+  splash0: require('../asset/image/splash0.png'),
   splash: require('../asset/image/splash1.jpg'),
   splash2: require('../asset/image/splash2.jpg'),
   splash3: require('../asset/image/splash3.jpg'),
@@ -40,11 +41,15 @@ export const IMAGE_BODY = {
   love: require('../asset/image/love.png'),
   chat2: require('../asset/image/chat2.png'),
   avatar: require('../asset/image/avatar.png'),
+  signin: require('../asset/image/signin.png'),
+  onboarding: require('../asset/image/on.png'),
+  major: require('../asset/image/main.png'),
 };
+
 
 export const COLOR = {
   BgColor: '#5080FA',
-  green: '#2EB66E',
+  green: '#3A5F0B',
   whiteColor: '#ffffff',
   primary: '#F88255',
   primaryOrange: '#E3562A',
