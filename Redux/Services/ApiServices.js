@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Axios from 'axios';
 
-export const BASE_URL = 'https://naijaconnect.herokuapp.com';
+export const BASE_URL = "https://naijaconnect.ng/app";
 const instance = Axios.create({
   baseURL: BASE_URL,
   timeout: 30000,
@@ -21,7 +21,7 @@ instance.interceptors.request.use(
     return Promise.reject(err);
   },
 );
-
+// Omis123
 instance.interceptors.response.use(
   async response => {
     return response;

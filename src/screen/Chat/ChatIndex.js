@@ -14,6 +14,7 @@ import {COLOR, HP, IMAGE_BODY, WP} from '../../utils/theme';
 import {useDispatch} from 'react-redux';
 import {getPrevious} from '../../../Redux/Slice/ChatSlice';
 import moment from 'moment';
+
 const ChatIndex = props => {
   const dispatch = useDispatch();
   const [listChat, setlLsChat] = useState([]);
@@ -86,6 +87,9 @@ const ChatIndex = props => {
       </View>
 
       <View style={{top: 50}}>
+        <View style={styles.searchIcon}>
+          <Feather name="search" size={22} color={COLOR.grey} />
+        </View>
         <TextInput
           placeholder="search"
           style={styles.textInput}
@@ -180,17 +184,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
     width: WP(90),
     left: WP(5),
-    borderWidth: WP(0.2),
+    borderWidth: WP(0.1),
     borderColor: COLOR.grey,
-    padding: WP(3),
+    paddingLeft: WP(12),
     borderRadius: WP(4),
   },
   time: {
-    color: 'black',
+    color: 'black', 
   },
   img: {
     width: WP(10),
     height: HP(5),
+    top: HP(2),
+  },
+  searchIcon: { 
+    position: 'absolute',
+    left: WP(10),
+    zIndex: 200,
     top: HP(2),
   },
 });

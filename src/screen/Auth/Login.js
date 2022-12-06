@@ -22,6 +22,8 @@ const Login = props => {
     password: '',
   });
 
+
+
   const handleInputChange = (inputName, inputValue) => {
     setValues({
       ...value,
@@ -54,7 +56,7 @@ const Login = props => {
       dispatch(
         login({
           identifier: value.email,
-          password: value.email,
+          password: value.password,
         }),
       )
         .unwrap()
@@ -64,7 +66,9 @@ const Login = props => {
           props.navigation.navigate('Bottom');
         })
         .catch(rejectedValueOrSerializedError => {
+          console.log(rejectedValueOrSerializedError, 'dnaknkdnkank');
           setloading(false);
+
           setMessageError(rejectedValueOrSerializedError.error.message);
         });
     }
@@ -95,6 +99,7 @@ const Login = props => {
             error={errors.password}
             showIcon={true}
             inputStyle={styles.inputStyle}
+            password={true}
           />
         </View>
         <View style={styles.signUpContainer}>

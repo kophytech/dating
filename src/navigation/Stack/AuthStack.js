@@ -18,12 +18,10 @@ const AuthStack = () => {
       }}
     >
       <Stack.Screen name="Register" component={Register} />
-
-      <Stack.Screen name="Step3" component={Step3} />
-      <Stack.Screen name="Step1" component={Step1} />
       <Stack.Screen name="Login" component={Login} />
-
+      <Stack.Screen name="Step1" component={Step1} />
       <Stack.Screen name="Step2" component={Step2} />
+      <Stack.Screen name="Step3" component={Step3} />
 
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 

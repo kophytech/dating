@@ -70,14 +70,15 @@ const Register = props => {
       setloading(false);
       setError(validation.errors.all());
     } else {
-      setloading(false);
       dispatch(register(value))
         .unwrap()
         .then(async data => {
+          setloading(false);
           const token = await AsyncStorage.setItem('@token', data?.token);
           props.navigation.navigate('Step1');
         })
         .catch(rejectedValueOrSerializedError => {
+          setloading(false);
           setBackendError(rejectedValueOrSerializedError);
         });
     }
@@ -123,6 +124,7 @@ const Register = props => {
             onChangeText={value => handleInputChange('password', value)}
             error={errors.password}
             showIcon={true}
+            password={true}
           />
           <FormInput
             label="Confirm Password"
@@ -130,6 +132,7 @@ const Register = props => {
               handleInputChange('password_confirmation', value)
             }
             showIcon={true}
+            password={true}
           />
         </View>
         <View style={{alignSelf: 'center'}}>

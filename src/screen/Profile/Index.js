@@ -1,9 +1,19 @@
-import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import {COLOR, HP, IMAGE_BODY, WP} from '../../utils/theme';
 import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {profileSlice} from '../../../Redux/Slice/ProfileSlice';
+import FastImage from 'react-native-fast-image';
+import {BASE_URL} from '../../../Redux/Services/ApiServices';
+import FormButton from '../../component/FormButton';
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -23,80 +33,109 @@ const Index = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Image
+      <TouchableOpacity style={styles.goPro}>
+        <Text style={styles.goProText}>GO PRO</Text>
+      </TouchableOpacity>
+      <View style={{top: HP(40)}}>
+        <FastImage
+          style={{
+            width: WP(60),
+            height: HP(20),
+            bottom: HP(3),
+            borderRadius: WP(13),
+          }}
+          source={{
+            uri: `${BASE_URL}` + '/' + `${profile.avater}`,
+          }}
+          resizeMode={FastImage.resizeMode.contain}
+        />
+        {/* <Image
         source={IMAGE_BODY.splash}
         style={styles.image1}
         resizeMode="cover"
-      />
-      <Text style={styles.name}>
-        {profile.first_name + ' ' + profile.last_name}
-      </Text>
-      <Text style={styles.name1}>
-        {profile?.country}
-        <Text style={styles.name2}>{profile?.address}</Text>
-      </Text>
-      <View style={styles.subContanier}>
-        <View>
-          <Text style={styles.aboutMe1}>About Me</Text>
-          <Text style={styles.aboutMeText}>{profile?.about}</Text>
-        </View>
-
-        {/* Info */}
-
-        <View style={styles.infoContainer}>
-          <Text style={styles.aboutMe1}>My Info</Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              flexWrap: 'wrap',
-              right: WP(3),
-            }}
-          >
-            <View style={styles.infoBox}>
-              <Text style={styles.infoText}>{profile?.country}</Text>
-            </View>
-            <View style={styles.infoBox}>
-              <Text style={styles.infoText}>Women</Text>
-            </View>
-            <View style={styles.infoBox}>
-              <Text style={styles.infoText}>Women</Text>
-            </View>
-            <View style={styles.infoBox}>
-              <Text style={styles.infoText}>Women</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.cardContainer}>
+      /> */}
+        <Text style={styles.name}>
+          {profile.first_name + ' ' + profile.last_name}
+        </Text>
+        <Text style={styles.name1}>
+          {profile?.country}
+          <Text style={styles.name2}>{profile?.address}</Text>
+        </Text>
+        <View style={styles.subContanier}>
           <View>
-            <Card style={{width: WP(40), backgroundColor: COLOR.whiteColor}}>
-              <Card.Title
-                title="People You Liked"
-                titleStyle={{color: COLOR.blackColor}}
-              />
-              <Card.Content>
-                <Text style={[styles.text1, {fontSize: HP(4)}]}>0</Text>
-              </Card.Content>
-            </Card>
+            <Text style={styles.aboutMe1}>About Me</Text>
+            <Text style={styles.aboutMeText}>{profile?.about}</Text>
           </View>
 
-          <View>
-            <Card
+          {/* Info */}
+
+          <View style={styles.infoContainer}>
+            <Text style={styles.aboutMe1}>My Info</Text>
+            <View
               style={{
-                width: WP(40),
-                right: WP(10),
-                backgroundColor: COLOR.whiteColor,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                flexWrap: 'wrap',
+                right: WP(3),
               }}
             >
-              <Card.Title
-                title="People You Liked"
-                titleStyle={{color: COLOR.blackColor}}
-              />
-              <Card.Content>
-                <Text style={[styles.text1, {fontSize: HP(4)}]}>0</Text>
-              </Card.Content>
-            </Card>
+              <View style={styles.infoBox}>
+                <Text style={styles.infoText}>{profile?.country}</Text>
+              </View>
+              <View style={styles.infoBox}>
+                <Text style={styles.infoText}>
+                  {profile?.status == 1 ? 'Single' : 'Married'}
+                </Text>
+              </View>
+              <View style={styles.infoBox}>
+                <Text style={styles.infoText}>{profile.height}cm</Text>
+              </View>
+              <View style={styles.infoBox}>
+                <Text style={styles.infoText}>
+                  {profile?.religion == '1' && 'Muslim'}
+                  {profile?.religion == '2' && 'Atheists'}
+                  {profile?.religion == '3' && 'Buddhist'}
+                  {profile?.religion == '4' && 'Catholic'}
+                  {profile?.religion == '6' && 'Hindu'}
+                  {profile?.religion == '7' && 'Jewish'}
+                  {profile?.religion == '8' && 'Agnostic'}
+                  {profile?.religion == '9' && 'Sikh'}
+                  {profile?.religion == '9' && 'Othes'}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.cardContainer}>
+            <View>
+              <Card style={{width: WP(40), backgroundColor: COLOR.whiteColor}}>
+                <Card.Title
+                  title="People You Liked"
+                  titleStyle={{color: COLOR.blackColor}}
+                />
+                <Card.Content>
+                  <Text style={[styles.text1, {fontSize: HP(4)}]}>0</Text>
+                </Card.Content>
+              </Card>
+            </View>
+
+            <View>
+              <Card
+                style={{
+                  width: WP(40),
+                  right: WP(10),
+                  backgroundColor: COLOR.whiteColor,
+                }}
+              >
+                <Card.Title
+                  title="People You Liked"
+                  titleStyle={{color: COLOR.blackColor}}
+                />
+                <Card.Content>
+                  <Text style={[styles.text1, {fontSize: HP(4)}]}>0</Text>
+                </Card.Content>
+              </Card>
+            </View>
           </View>
         </View>
       </View>
@@ -174,5 +213,17 @@ const styles = StyleSheet.create({
   },
   text1: {
     color: COLOR.blackColor,
+  },
+  goPro: {
+    alignSelf: 'flex-end',
+    backgroundColor: COLOR.green,
+    right: WP(3),
+    width: WP(20),
+    top: HP(3),
+    padding: WP(2),
+    borderRadius: WP(3),
+  },
+  goProText: {
+    color: COLOR.whiteColor,
   },
 });

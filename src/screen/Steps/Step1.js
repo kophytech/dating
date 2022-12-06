@@ -45,7 +45,6 @@ const Step1 = props => {
       });
     } else {
       let value = {...response?.assets};
-
       dispatch(
         step1Material({
           avatar:
@@ -59,6 +58,7 @@ const Step1 = props => {
       )
         .unwrap()
         .then(item => {
+          console.log(item, 'aldmdlamlmdalmldm');
           props.navigation.navigate('Step2');
           setLoading(false);
         })

@@ -8,7 +8,7 @@ export const step1Material = createAsyncThunk(
     try {
       return await StepService.postStep1Service(data);
     } catch (error) {
-      console.log(error.response.data, 'e9999ror');
+      console.log(error.response, 'e991111199ror');
       const {message} = error;
       // console.log(error.response.data || message)
 
@@ -21,12 +21,16 @@ export const step1Material = createAsyncThunk(
   },
 );
 
+
 export const step2Material = createAsyncThunk(
   'material/step2',
   async (data, thunkAPI) => {
     try {
       return await StepService.postStep2Service(data);
     } catch (error) {
+      console.log('====================================');
+      console.log(error.response, 'eeererer');
+      console.log('====================================');
       const {message} = error;
       // console.log(error.response.data || message)
 

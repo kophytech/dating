@@ -23,6 +23,7 @@ const FormInput = props => {
         onChangeText={props.onChangeText}
         keyboardType={props.keyboardType}
         placeholderTextColor="black"
+        secureTextEntry={props.password == true && !showPassword}
       />
       {props.showIcon && (
         <>

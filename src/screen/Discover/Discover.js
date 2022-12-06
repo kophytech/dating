@@ -89,7 +89,7 @@ const data = [
     image: IMAGE_BODY.splash,
   },
 ];
-const Discover = () => {
+const Discover = props => {
   const dispatch = useDispatch();
   const [random, setRandom] = useState([]);
   React.useEffect(() => {
@@ -114,12 +114,14 @@ const Discover = () => {
           width: WP(95),
         }}
       >
-        <View>
+        <TouchableOpacity onPress={() => props.navigation.goBack()}>
           <Ionicons name="chevron-back" size={32} color={'black'} />
-        </View>
+        </TouchableOpacity>
         <View>
           {/* <Image source={IMAGE_BODY.main} /> */}
-          <Text style={{color: 'black', fontSize: WP(6.5)}}>Random</Text>
+          <Text style={{color: 'black', fontSize: WP(5.5), fontWeight: 'bold'}}>
+            Random
+          </Text>
         </View>
         <TouchableOpacity>
           <Entypo name="dots-three-vertical" size={28} color={'black'} />
