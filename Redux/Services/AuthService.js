@@ -92,8 +92,6 @@ const UpdateVendorApi = vendorData => {
 
 const deleteVendorApi = vendorData => {
   return instance.delete(`/vendor/${vendorData?.id}`).then(response => {
-    console.log(response, 'r1111111121');
-
     return response.data;
   });
 };

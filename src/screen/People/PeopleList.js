@@ -18,7 +18,7 @@ import FastImage from 'react-native-fast-image';
 const PeopleList = props => {
   const {people} = props;
   const navigation = useNavigation();
-
+  console.log(people, '11111');
   const [userDetails, setUserDetails] = useState({});
   return (
     <View style={styles.container}>

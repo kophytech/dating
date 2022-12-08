@@ -34,6 +34,20 @@ function BottomStack() {
       />
 
       <Tab.Screen
+        name="Discover"
+        component={Discover}
+        options={{
+          tabBarLabel: 'Discover',
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons
+              name="cards-heart-outline"
+              size={32}
+              color={COLOR.green}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Chat"
         component={ChatStack}
         options={{
@@ -41,21 +55,6 @@ function BottomStack() {
           tabBarIcon: ({color, size}) => (
             <Ionicons
               name="chatbox-ellipses-outline"
-              size={32}
-              color={COLOR.green}
-            />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="Discover"
-        component={Discover}
-        options={{
-          tabBarLabel: 'Discover',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="star-three-points-outline"
               size={32}
               color={COLOR.green}
             />

@@ -18,21 +18,21 @@ import FormButton from '../../component/FormButton';
 const Index = () => {
   const dispatch = useDispatch();
   const [profile, setProfile] = React.useState({});
-
+  console.log(profile.first_name, '11');
   React.useEffect(() => {
     dispatch(profileSlice())
       .unwrap()
       .then(item => {
-        console.log(item, '99999');
         setProfile(item);
       })
-      .catch(err => {
-        console.log(err, '11111111111');
-      });
+      .catch(err => {});
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{paddingBottom: HP(90)}}
+    >
       <TouchableOpacity style={styles.goPro}>
         <Text style={styles.goProText}>GO PRO</Text>
       </TouchableOpacity>
@@ -41,100 +41,100 @@ const Index = () => {
           style={{
             width: WP(60),
             height: HP(20),
-            bottom: HP(3),
+            bottom: HP(30),
             borderRadius: WP(13),
+            alignSelf: 'center',
           }}
           source={{
             uri: `${BASE_URL}` + '/' + `${profile.avater}`,
           }}
           resizeMode={FastImage.resizeMode.contain}
         />
-        {/* <Image
-        source={IMAGE_BODY.splash}
-        style={styles.image1}
-        resizeMode="cover"
-      /> */}
-        <Text style={styles.name}>
-          {profile.first_name + ' ' + profile.last_name}
-        </Text>
-        <Text style={styles.name1}>
-          {profile?.country}
-          <Text style={styles.name2}>{profile?.address}</Text>
-        </Text>
-        <View style={styles.subContanier}>
-          <View>
-            <Text style={styles.aboutMe1}>About Me</Text>
-            <Text style={styles.aboutMeText}>{profile?.about}</Text>
-          </View>
-
-          {/* Info */}
-
-          <View style={styles.infoContainer}>
-            <Text style={styles.aboutMe1}>My Info</Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                flexWrap: 'wrap',
-                right: WP(3),
-              }}
-            >
-              <View style={styles.infoBox}>
-                <Text style={styles.infoText}>{profile?.country}</Text>
-              </View>
-              <View style={styles.infoBox}>
-                <Text style={styles.infoText}>
-                  {profile?.status == 1 ? 'Single' : 'Married'}
-                </Text>
-              </View>
-              <View style={styles.infoBox}>
-                <Text style={styles.infoText}>{profile.height}cm</Text>
-              </View>
-              <View style={styles.infoBox}>
-                <Text style={styles.infoText}>
-                  {profile?.religion == '1' && 'Muslim'}
-                  {profile?.religion == '2' && 'Atheists'}
-                  {profile?.religion == '3' && 'Buddhist'}
-                  {profile?.religion == '4' && 'Catholic'}
-                  {profile?.religion == '6' && 'Hindu'}
-                  {profile?.religion == '7' && 'Jewish'}
-                  {profile?.religion == '8' && 'Agnostic'}
-                  {profile?.religion == '9' && 'Sikh'}
-                  {profile?.religion == '9' && 'Othes'}
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.cardContainer}>
+        <View>
+          <Text style={styles.name}>
+            {profile.first_name + ' ' + profile.last_name}
+          </Text>
+          <Text style={styles.name1}>
+            {profile?.country}
+            <Text style={styles.name2}>{profile?.address}</Text>
+          </Text>
+          <View style={styles.subContanier}>
             <View>
-              <Card style={{width: WP(40), backgroundColor: COLOR.whiteColor}}>
-                <Card.Title
-                  title="People You Liked"
-                  titleStyle={{color: COLOR.blackColor}}
-                />
-                <Card.Content>
-                  <Text style={[styles.text1, {fontSize: HP(4)}]}>0</Text>
-                </Card.Content>
-              </Card>
+              <Text style={styles.aboutMe1}>About Me</Text>
+              <Text style={styles.aboutMeText}>{profile?.about}</Text>
             </View>
 
-            <View>
-              <Card
+            {/* Info */}
+
+            <View style={styles.infoContainer}>
+              <Text style={styles.aboutMe1}>My Info</Text>
+              <View
                 style={{
-                  width: WP(40),
-                  right: WP(10),
-                  backgroundColor: COLOR.whiteColor,
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  flexWrap: 'wrap',
+                  right: WP(3),
                 }}
               >
-                <Card.Title
-                  title="People You Liked"
-                  titleStyle={{color: COLOR.blackColor}}
-                />
-                <Card.Content>
-                  <Text style={[styles.text1, {fontSize: HP(4)}]}>0</Text>
-                </Card.Content>
-              </Card>
+                <View style={styles.infoBox}>
+                  <Text style={styles.infoText}>{profile?.country}</Text>
+                </View>
+                <View style={styles.infoBox}>
+                  <Text style={styles.infoText}>
+                    {profile?.status == 1 ? 'Single' : 'Married'}
+                  </Text>
+                </View>
+                <View style={styles.infoBox}>
+                  <Text style={styles.infoText}>{profile.height}cm</Text>
+                </View>
+                <View style={styles.infoBox}>
+                  <Text style={styles.infoText}>
+                    {profile?.religion == '1' && 'Muslim'}
+                    {profile?.religion == '2' && 'Atheists'}
+                    {profile?.religion == '3' && 'Buddhist'}
+                    {profile?.religion == '4' && 'Catholic'}
+                    {profile?.religion == '6' && 'Hindu'}
+                    {profile?.religion == '7' && 'Jewish'}
+                    {profile?.religion == '8' && 'Agnostic'}
+                    {profile?.religion == '9' && 'Sikh'}
+                    {profile?.religion == '9' && 'Othes'}
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.cardContainer}>
+              <View>
+                <Card
+                  style={{width: WP(40), backgroundColor: COLOR.whiteColor}}
+                >
+                  <Card.Title
+                    title="People You Liked"
+                    titleStyle={{color: COLOR.blackColor}}
+                  />
+                  <Card.Content>
+                    <Text style={[styles.text1, {fontSize: HP(4)}]}>0</Text>
+                  </Card.Content>
+                </Card>
+              </View>
+
+              <View>
+                <Card
+                  style={{
+                    width: WP(40),
+                    right: WP(10),
+                    backgroundColor: COLOR.whiteColor,
+                  }}
+                >
+                  <Card.Title
+                    title="People You Liked"
+                    titleStyle={{color: COLOR.blackColor}}
+                  />
+                  <Card.Content>
+                    <Text style={[styles.text1, {fontSize: HP(4)}]}>0</Text>
+                  </Card.Content>
+                </Card>
+              </View>
             </View>
           </View>
         </View>

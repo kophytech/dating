@@ -22,8 +22,6 @@ const Login = props => {
     password: '',
   });
 
-
-
   const handleInputChange = (inputName, inputValue) => {
     setValues({
       ...value,
@@ -66,15 +64,13 @@ const Login = props => {
           props.navigation.navigate('Bottom');
         })
         .catch(rejectedValueOrSerializedError => {
-          console.log(rejectedValueOrSerializedError, 'dnaknkdnkank');
+          // console.log(rejectedValueOrSerializedError, 'dnaknkdnkank');
           setloading(false);
 
           setMessageError(rejectedValueOrSerializedError.error.message);
         });
     }
   };
-
-  console.log(errors, 'jkjkjjjjj');
 
   return (
     <KeyboardAwareScrollView
