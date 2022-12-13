@@ -14,84 +14,11 @@ import {useDispatch} from 'react-redux';
 import {randomSlice} from '../../../Redux/Slice/RandomSlice';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {BASE_URL} from '../../../Redux/Services/ApiServices';
 
-const data = [
-  {
-    id: 1,
-    name: 'Emmanuel Omidiora',
-    gender: 'Male',
-    country: 'Nigeria',
-    age: 22,
-    about:
-      'Hi, I am Adrianne Rico. I am now 22 years old and I am looking for someone to love and care for me seriously....See more',
-    image: IMAGE_BODY.splash,
-  },
-  {
-    id: 2,
-    name: 'Emmanuel Omidiora',
-    gender: 'Male',
-    country: 'Nigeria',
-    age: 22,
-    about:
-      'Hi, I am Adrianne Rico. I am now 22 years old and I am looking for someone to love and care for me seriously....See more',
-    image: IMAGE_BODY.splash,
-  },
-  {
-    id: 3,
-    name: 'Emmanuel Omidiora',
-    gender: 'Male',
-    country: 'Nigeria',
-    age: 22,
-    about:
-      'Hi, I am Adrianne Rico. I am now 22 years old and I am looking for someone to love and care for me seriously....See more',
-    image: IMAGE_BODY.splash,
-  },
-  {
-    id: 4,
-    name: 'Emmanuel Omidiora',
-    gender: 'Male',
-    country: 'Nigeria',
-    age: 22,
-    about:
-      'Hi, I am Adrianne Rico. I am now 22 years old and I am looking for someone to love and care for me seriously....See more',
-    image: IMAGE_BODY.splash,
-  },
-  {
-    id: 5,
-    name: 'Emmanuel Omidiora',
-    gender: 'Male',
-    country: 'Nigeria',
-    age: 22,
-    about:
-      'Hi, I am Adrianne Rico. I am now 22 years old and I am looking for someone to love and care for me seriously....See more',
-    image: IMAGE_BODY.splash,
-  },
-
-  {
-    id: 6,
-    name: 'Emmanuel Omidiora',
-    gender: 'Male',
-    country: 'Nigeria',
-    age: 22,
-    about:
-      'Hi, I am Adrianne Rico. I am now 22 years old and I am looking for someone to love and care for me seriously....See more',
-    image: IMAGE_BODY.splash,
-  },
-
-  {
-    id: 7,
-    name: 'Emmanuel Omidiora',
-    gender: 'Male',
-    country: 'Nigeria',
-    age: 22,
-    about:
-      'Hi, I am Adrianne Rico. I am now 22 years old and I am looking for someone to love and care for me seriously....See more',
-    image: IMAGE_BODY.splash,
-  },
-];
 const Discover = props => {
   const dispatch = useDispatch();
-  const [random, setRandom] = useState([]);
+  const [random, setRandom] = React.useState([]);
   React.useEffect(() => {
     dispatch(randomSlice())
       .unwrap()
@@ -136,13 +63,14 @@ const Discover = props => {
           contentContainerStyle={{paddingBottom: HP(60), paddingLeft: 11}}
           style={{paddingLeft: 1}}
           renderItem={({item}) => (
-            console.log(item, '1111111'),
             (
               <TouchableOpacity
                 style={{top: HP(8), width: WP(52), marginTop: WP(3)}}
               >
                 <Image
-                  source={item.image}
+                  source={{
+                    uri: `${BASE_URL}` + '/' + `${item.avater}`,
+                  }}
                   style={styles.image}
                   resizeMode="cover"
                 />

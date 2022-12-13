@@ -19,11 +19,13 @@ export const getPrevious = createAsyncThunk('Liking/liked', async thunkAPI => {
 
 export const chatWithOtherUser = createAsyncThunk(
   'Liking/liked',
-  async thunkAPI => {
+  async(data, thunkAPI) => {
     try {
-      console.log(data, '303030303030');
       return await ChatService.chatWithOtherServices(data);
     } catch (error) {
+      console.log('====================================');
+      console.log(error, 'backend error');
+      console.log('====================================');
       const {message} = error;
       console.log(error.response.data || message);
 

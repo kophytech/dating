@@ -3,7 +3,7 @@ import Discover from '../../screen/Discover/Discover';
 import People from '../../screen/People/People';
 import Index from '../../screen/Profile/Index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {COLOR, IMAGE_BODY} from '../../utils/theme';
+import {COLOR, IMAGE_BODY, WP} from '../../utils/theme';
 import {Image} from 'react-native';
 import ChatScreen from '../../screen/Chat/ChatScreen';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -20,6 +20,14 @@ function BottomStack() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarStyle: [
+          {
+            borderTopRightRadius: 30,
+            borderTopLeftRadius: 20,
+            elevation: 30,
+          },
+          null,
+        ],
       }}
     >
       <Tab.Screen

@@ -6,69 +6,115 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {COLOR, HP, IMAGE_BODY, WP} from '../../utils/theme';
-import {useDispatch} from 'react-redux';
-import {PaymentSlice} from '../../../Redux/Slice/ProfileSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  getMembershipPriceSlice,
+  PaymentSlice,
+  PaystackSlice,
+} from '../../../Redux/Slice/ProfileSlice';
 import {showMessage} from 'react-native-flash-message';
 
-const ListData = [
-  {
-    id: 1,
-    price: '50',
-    image: IMAGE_BODY.bag,
-  },
-
-  {
-    id: 2,
-    price: '100',
-    image: IMAGE_BODY.pot,
-  },
-  {
-    id: 3,
-    price: '100',
-    image: IMAGE_BODY.gold,
-  },
-];
+import {WebView} from 'react-native-webview';
 
 const Proscreen = props => {
   const dispatch = useDispatch();
 
-  const onSubmit = price => {
-    dispatch(
-      PaymentSlice({
-        price: price,
-      }),
-    )
+  const [listofCredit, setlistofCredit] = useState({});
+  const [selectPlan, setSelectPlan] = useState({});
+
+  console.log('====================================');
+  console.log(selectPlan?.public_key, '123');
+  console.log('====================================');
+
+  React.useEffect(() => {
+    dispatch(getMembershipPriceSlice())
+      .unwrap()
+      .then(creditSlice => {
+        setlistofCredit(creditSlice);
+      });
+  }, []);
+
+  const onSubmit = data => {
+    dispatch(PaystackSlice(data))
       .unwrap()
       .then(item => {
-        props.navigation.navigate('SuccessSCreen');
+        setSelectPlan(item);
       })
       .catch(err => {
         showMessage({
-          message:"Something  Went Wrong",
-          type:'danger'
-        })
+          message: 'Something  Went Wrong',
+          type: 'danger',
+        });
       });
   };
 
+  if (Object.keys(selectPlan).length > 0) {
+    return (
+      <View style={{flex: 1}}>
+        <WebView
+          source={{uri: 'https://checkout.paystack.com/tk81m1jwys4652x'}}
+        />
+      </View>
+    );
+  }
+
+  console.log('====================================');
+  console.log(selectPlan);
+  console.log('====================================');
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{paddingBottom: WP(80)}}
+    >
       <Text style={styles.headerText}>BUY CREDIT</Text>
       <View style={styles.subContainer}>
         <View style={styles.ListData}>
-          {ListData.map(item => (
-            <View style={styles.list}>
-              <Image source={item.image} style={styles.img} />
-              <Text style={styles.price}>&#8358;{item.price}</Text>
-              <TouchableOpacity
-                style={styles.pay}
-                onPress={() => onSubmit(item.price)}
-              >
-                <Text style={styles.text}>pay</Text>
-              </TouchableOpacity>
-            </View>
-          ))}
+          <View style={styles.list}>
+            <Text style={styles.header}>Monthly Plan</Text>
+            <Image source={IMAGE_BODY.bag} style={styles.img} />
+            <Text style={styles.price}>
+              &#8358;{listofCredit?.monthly_pro_plan}
+            </Text>
+            <TouchableOpacity
+              style={styles.pay}
+              onPress={() => onSubmit('monthly_pro_plan')}
+            >
+              <Text style={styles.text}>pay</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.ListData}>
+          <View style={styles.list}>
+            <Text style={styles.header}>Yearly Plan</Text>
+            <Image source={IMAGE_BODY.pot} style={styles.img} />
+            <Text style={styles.price}>
+              &#8358;{listofCredit?.anually_pro_plan}
+            </Text>
+            <TouchableOpacity
+              style={styles.pay}
+              onPress={() => onSubmit('anually_pro_plan')}
+            >
+              <Text style={styles.text}>pay</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.ListData}>
+          <View style={styles.list}>
+            <Image source={IMAGE_BODY.gold} style={styles.img} />
+            <Text style={styles.price}>
+              &#8358;{listofCredit?.chest_of_credits?.price}
+            </Text>
+            <TouchableOpacity
+              style={styles.pay}
+              onPress={() => onSubmit(listofCredit?.chest_of_credits?.price)}
+            >
+              <Text style={styles.text}>pay</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -101,7 +147,7 @@ const styles = StyleSheet.create({
     width: WP(80),
     marginVertical: WP(3),
     alignSelf: 'center',
-    height: HP(40),
+    height: HP(42),
   },
   img: {
     width: WP(35),
@@ -126,7 +172,14 @@ const styles = StyleSheet.create({
     borderRadius: WP(3),
   },
   pay: {
-    marginTop: HP(3),
+    marginBottom: HP(1),
     alignSelf: 'center',
+  },
+  header: {
+    bottom: HP(4),
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: WP(7),
+    color: COLOR.green,
   },
 });

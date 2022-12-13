@@ -44,7 +44,7 @@ export const IMAGE_BODY = {
   signin: require('../asset/image/signin.png'),
   onboarding: require('../asset/image/on.png'),
   major: require('../asset/image/main.png'),
-  bag: require('../asset/image/bag.png'),
+  bag: require('../asset/image/bag.jpeg'),
   gold: require('../asset/image/gold.jpeg'),
   pot: require('../asset/image/pot.jpeg'),
   sucess: require('../asset/image/sucess.png'),

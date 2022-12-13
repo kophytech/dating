@@ -184,9 +184,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
     width: WP(90),
     left: WP(5),
-    borderWidth: WP(0.1),
+    
     borderColor: COLOR.grey,
-    paddingLeft: WP(12),
     borderRadius: WP(4),
   },
   time: {

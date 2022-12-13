@@ -6,8 +6,8 @@ const previousMessages = id => {
   });
 };
 const chatWithOtherServices = data => {
-  return instance.get(`previous-message?to=8`).then(response => {
-    return response;
+  return instance.get(`/previous-message?to=${data}`).then(response => {
+    return response.data;
   });
 };
 

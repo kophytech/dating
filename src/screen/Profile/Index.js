@@ -15,10 +15,10 @@ import FastImage from 'react-native-fast-image';
 import {BASE_URL} from '../../../Redux/Services/ApiServices';
 import FormButton from '../../component/FormButton';
 
-const Index = () => {
+const Index = props => {
   const dispatch = useDispatch();
   const [profile, setProfile] = React.useState({});
-  console.log(profile.first_name, '11');
+  console.log(profile, '11');
   React.useEffect(() => {
     dispatch(profileSlice())
       .unwrap()
@@ -31,16 +31,20 @@ const Index = () => {
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{paddingBottom: HP(90)}}
+      contentContainerStyle={{paddingBottom: HP(20)}}
     >
-      <TouchableOpacity style={styles.goPro}>
+      {/* GoProSCreen */}
+      <TouchableOpacity
+        style={styles.goPro}
+        onPress={() => props.navigation.navigate('GoProSCreen')}
+      >
         <Text style={styles.goProText}>GO PRO</Text>
       </TouchableOpacity>
       <View style={{top: HP(40)}}>
         <FastImage
           style={{
-            width: WP(60),
-            height: HP(20),
+            width: WP(70),
+            height: HP(30),
             bottom: HP(30),
             borderRadius: WP(13),
             alignSelf: 'center',
@@ -48,94 +52,32 @@ const Index = () => {
           source={{
             uri: `${BASE_URL}` + '/' + `${profile.avater}`,
           }}
-          resizeMode={FastImage.resizeMode.contain}
+          resizeMode={FastImage.resizeMode.cover}
         />
-        <View>
-          <Text style={styles.name}>
-            {profile.first_name + ' ' + profile.last_name}
+        <View style={styles.details}>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('EditProfile')}
+            style={[
+              styles.goPro,
+              {marginVertical: WP(2), top: HP(1), width: WP(30)},
+            ]}
+          >
+            <Text style={[styles.goProText, {textAlign: 'center'}]}>
+              EDIT PROFILE
+            </Text>
+          </TouchableOpacity>
+
+          <Text style={styles.aboutMe}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book.
           </Text>
-          <Text style={styles.name1}>
-            {profile?.country}
-            <Text style={styles.name2}>{profile?.address}</Text>
-          </Text>
-          <View style={styles.subContanier}>
-            <View>
-              <Text style={styles.aboutMe1}>About Me</Text>
-              <Text style={styles.aboutMeText}>{profile?.about}</Text>
-            </View>
-
-            {/* Info */}
-
-            <View style={styles.infoContainer}>
-              <Text style={styles.aboutMe1}>My Info</Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                  flexWrap: 'wrap',
-                  right: WP(3),
-                }}
-              >
-                <View style={styles.infoBox}>
-                  <Text style={styles.infoText}>{profile?.country}</Text>
-                </View>
-                <View style={styles.infoBox}>
-                  <Text style={styles.infoText}>
-                    {profile?.status == 1 ? 'Single' : 'Married'}
-                  </Text>
-                </View>
-                <View style={styles.infoBox}>
-                  <Text style={styles.infoText}>{profile.height}cm</Text>
-                </View>
-                <View style={styles.infoBox}>
-                  <Text style={styles.infoText}>
-                    {profile?.religion == '1' && 'Muslim'}
-                    {profile?.religion == '2' && 'Atheists'}
-                    {profile?.religion == '3' && 'Buddhist'}
-                    {profile?.religion == '4' && 'Catholic'}
-                    {profile?.religion == '6' && 'Hindu'}
-                    {profile?.religion == '7' && 'Jewish'}
-                    {profile?.religion == '8' && 'Agnostic'}
-                    {profile?.religion == '9' && 'Sikh'}
-                    {profile?.religion == '9' && 'Othes'}
-                  </Text>
-                </View>
-              </View>
-            </View>
-
-            <View style={styles.cardContainer}>
-              <View>
-                <Card
-                  style={{width: WP(40), backgroundColor: COLOR.whiteColor}}
-                >
-                  <Card.Title
-                    title="People You Liked"
-                    titleStyle={{color: COLOR.blackColor}}
-                  />
-                  <Card.Content>
-                    <Text style={[styles.text1, {fontSize: HP(4)}]}>0</Text>
-                  </Card.Content>
-                </Card>
-              </View>
-
-              <View>
-                <Card
-                  style={{
-                    width: WP(40),
-                    right: WP(10),
-                    backgroundColor: COLOR.whiteColor,
-                  }}
-                >
-                  <Card.Title
-                    title="People You Liked"
-                    titleStyle={{color: COLOR.blackColor}}
-                  />
-                  <Card.Content>
-                    <Text style={[styles.text1, {fontSize: HP(4)}]}>0</Text>
-                  </Card.Content>
-                </Card>
-              </View>
-            </View>
+          <View style={styles.hobieContainer}>
+            <Text style={styles.header}>Hobbie</Text>
+            <Text style={styles.hobText}>
+              Computer Programming, Archery, Drawing, Chess, Poetry
+            </Text>
           </View>
         </View>
       </View>
@@ -182,37 +124,23 @@ const styles = StyleSheet.create({
     left: WP(5),
     marginVertical: HP(4),
   },
-  aboutMe1: {
-    fontSize: HP(2),
-    fontWeight: '500',
+
+  details: {
+    borderWidth: 0.1,
+    bottom: HP(15),
+    elevation: 500,
+    height: HP(50),
+    width: '100%',
+    backgroundColor: COLOR.whiteColor,
+    alignSelf: 'center',
+    borderRadius: WP(3),
+  },
+  aboutMe: {
     color: COLOR.blackColor,
-  },
-  aboutMeText: {
-    fontSize: WP(4),
-    maxWidth: WP(90),
-    left: WP(5),
-    color: COLOR.blackColor,
-    marginVertical: HP(2),
-  },
-  infoBox: {
-    width: WP(20),
-    backgroundColor: 'black',
-    padding: HP(1),
-    borderRadius: WP(2),
-    marginVertical: WP(3),
-  },
-  infoText: {
-    color: COLOR.whiteColor,
     textAlign: 'center',
-    textTransform: 'capitalize',
-  },
-  cardContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     top: HP(3),
-  },
-  text1: {
-    color: COLOR.blackColor,
+    maxWidth: WP(80),
+    left: WP(7),
   },
   goPro: {
     alignSelf: 'flex-end',
@@ -225,5 +153,17 @@ const styles = StyleSheet.create({
   },
   goProText: {
     color: COLOR.whiteColor,
+  },
+  hobieContainer: {
+    top: HP(7),
+    left: WP(5),
+  },
+  header: {
+    color: COLOR.blackColor,
+    fontWeight: 'bold',
+    fontSize: WP(4),
+  },
+  hobText: {
+    color: COLOR.blackColor,
   },
 });

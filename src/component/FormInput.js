@@ -20,6 +20,7 @@ const FormInput = props => {
         placeholder={props.placeholder}
         style={[styles.input, props.inputStyle]}
         autoCapitalize="none"
+        value={props.value}
         onChangeText={props.onChangeText}
         keyboardType={props.keyboardType}
         placeholderTextColor="black"

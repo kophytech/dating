@@ -4,6 +4,8 @@ import ChatScreen from '../screen/Chat/ChatScreen';
 import FilterScreen from '../screen/Filter/FilterScreen';
 import OnboardingScreen from '../screen/Onboarding/OnboardingScreen';
 import Proscreen from '../screen/PRO/Proscreen';
+import BootProfile from '../screen/Profile/BootProfile';
+import EditProfile from '../screen/Profile/EditProfile';
 import SuccessScreen from '../screen/Success/SuccessScreen';
 import UserDetails from '../screen/UserLikes/UserDetails';
 import BottomStack from './Bottom/Index';
@@ -17,15 +19,19 @@ const RootNavgiation = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Splash" component={Splash} />
+      {/* <Stack.Screen name="Splash" component={Splash} />
       <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-      <Stack.Screen name="Auth" component={AuthStack} />
+      <Stack.Screen name="EditProfile" component={EditProfile} /> */}
+      {/*/}
+      {/**/}
+      {/* <Stack.Screen name="Auth" component={AuthStack} /> */}
       <Stack.Screen name="Bottom" component={BottomStack} />
-      <Stack.Screen name="SuccessSCreen" component={SuccessScreen} />
       <Stack.Screen name="GoProSCreen" component={Proscreen} />
       <Stack.Screen name="Filter" component={FilterScreen} />
       <Stack.Screen name="UserDetails" component={UserDetails} />
+      <Stack.Screen name="BootYourProfile" component={BootProfile} />
       <Stack.Screen name="ChatMessaging" component={ChatScreen} />
+      <Stack.Screen name="SuccessSCreen" component={SuccessScreen} />
     </Stack.Navigator>
   );
 };

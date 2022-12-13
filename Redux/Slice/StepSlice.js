@@ -8,7 +8,7 @@ export const step1Material = createAsyncThunk(
     try {
       return await StepService.postStep1Service(data);
     } catch (error) {
-      console.log(error.response, 'e991111199ror');
+      console.log(error, 'e991111199ror');
       const {message} = error;
       // console.log(error.response.data || message)
 

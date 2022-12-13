@@ -22,10 +22,19 @@ const Step1 = props => {
   const dispatch = useDispatch();
   const [loading, setLoading] = React.useState(false);
 
-  const onButtonPress = React.useCallback((type, options) => {
-    ImagePicker.launchCamera(options, setResponse);
+  const onButtonPress = () => {
+    ImagePicker.launchCamera(
+      {
+        title: 'Choose an Image',
+        base64: true,
+        includeBase64: true,
+      },
+      response => {
+        setResponse(response);
+      },
+    );
     setSmage(true);
-  }, []);
+  };
 
   const onUploadImage = () => {
     setLoading(true);
@@ -36,6 +45,9 @@ const Step1 = props => {
       });
     } else {
       let value = {...response?.assets};
+      console.log('====================================');
+      console.log(value);
+      console.log('====================================');
 
       dispatch(
         step2Material({

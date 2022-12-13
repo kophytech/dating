@@ -18,12 +18,11 @@ import FastImage from 'react-native-fast-image';
 const PeopleList = props => {
   const {people} = props;
   const navigation = useNavigation();
-  console.log(people, '11111');
   const [userDetails, setUserDetails] = useState({});
   return (
     <View style={styles.container}>
       <FlatList
-        contentContainerStyle={{paddingBottom: WP(20)}}
+        contentContainerStyle={{paddingBottom: WP(90)}}
         // data={people.slice(0, 10)}
         data={people}
         numColumns={2}
@@ -38,21 +37,24 @@ const PeopleList = props => {
                 {/* <UserImageComponent item={item.avater} /> */}
                 <FastImage
                   style={{
-                    width: WP(60),
-                    height: HP(20),
+                    width: WP(45),
+                    height: HP(15),
                     bottom: HP(3),
-                    borderRadius: WP(13),
+                    borderRadius: WP(1),
                   }}
                   source={{
-                    uri: 'https://unsplash.it/400/400?image=1',
+                    uri: `${BASE_URL}/${item.avater}`,
                   }}
-                  resizeMode={FastImage.resizeMode.contain}
+                  resizeMode={FastImage.resizeMode.cover}
                 />
               </View>
               <View style={styles.name}>
                 <Text style={styles.first_name}>{item?.first_name}</Text>
                 <Text style={styles.username}>@{item?.username}</Text>
-                <Text style={styles.gender}> {item.gender}</Text>
+                <Text style={styles.gender}>
+                  {' '}
+                  {item.gender == '4525' ? 'Male' : 'Female'}
+                </Text>
               </View>
             </TouchableOpacity>
           );
@@ -83,12 +85,13 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOpacity: 0.5,
     elevation: 3,
-    borderWidth: 0.4,
+    borderWidth: 0.1,
     height: HP(30),
     borderColor: COLOR.lightGrey,
     marginHorizontal: WP(4),
     top: 10,
     left: WP(-8),
+    borderRadius: WP(4),
   },
   name: {
     top: HP(2),
@@ -108,7 +111,7 @@ const styles = StyleSheet.create({
   username: {
     color: COLOR.blackColor,
     fontWeight: '400',
-    maxWidth: WP(30),
+    maxWidth: WP(37),
     left: WP(0.4),
   },
   gender: {

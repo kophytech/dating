@@ -22,6 +22,9 @@ const UserDetails = props => {
     },
   } = props;
 
+  console.log('====================================');
+  console.log(item);
+  console.log('====================================');
   const onLike = () => {
     console.log(item.id, '99999');
     setLoading(true);
@@ -89,9 +92,9 @@ const UserDetails = props => {
         <FastImage
           style={styles.img}
           source={{
-            uri: 'https://unsplash.it/400/400?image=1',
+            uri: `${BASE_URL}/${item.avater}`,
           }}
-          resizeMode={FastImage.resizeMode.contain}
+          resizeMode={FastImage.resizeMode.cover}
         />
         {/* <Image
           source={{uri: `${BASE_URL}/${item?.avater}`}}
@@ -114,7 +117,7 @@ const UserDetails = props => {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate('Chat', {item})}
+          onPress={() => props.navigation.navigate('ChatMessaging', {item})}
         >
           <MaterialCommunityIcons
             name="message-processing-outline"
@@ -127,12 +130,18 @@ const UserDetails = props => {
         <Text style={styles.name}>
           {item.first_name + ' ' + item.last_name}
         </Text>
-        <Text style={styles.gender}>{item.gender}, 20</Text>
+        <Text style={styles.gender}>
+          {item.gender == '4525' ? 'Male' : 'Female'}, 20
+        </Text>
 
-        <View style={{alignSelf: 'center', top: HP(3)}}>
-          <Text style={styles.aboutText}>About Me</Text>
-          <Text style={styles.aboutText1}>I love reading</Text>
-        </View>
+        {item?.about && (
+          <>
+            <View style={{alignSelf: 'center', top: HP(3)}}>
+              <Text style={styles.aboutText}>About Me</Text>
+              <Text style={styles.aboutText1}>{item?.about}</Text>
+            </View>
+          </>
+        )}
       </View>
     </View>
   );
@@ -147,8 +156,8 @@ const styles = StyleSheet.create({
   },
   img: {
     width: WP('100%'),
-    height: HP(50),
-    borderRadius: WP(7),
+    height: HP(35),
+    borderRadius: WP(1),
     top: HP(5),
   },
   iconText: {

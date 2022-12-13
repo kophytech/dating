@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   pay: {
-    top: HP(30),
+    top: HP(20),
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: WP(5),
