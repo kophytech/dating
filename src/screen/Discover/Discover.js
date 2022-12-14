@@ -63,39 +63,38 @@ const Discover = props => {
           contentContainerStyle={{paddingBottom: HP(60), paddingLeft: 11}}
           style={{paddingLeft: 1}}
           renderItem={({item}) => (
-            (
-              <TouchableOpacity
-                style={{top: HP(8), width: WP(52), marginTop: WP(3)}}
+            <TouchableOpacity
+              style={{top: HP(8), width: WP(52), marginTop: WP(3)}}
+              onPress={() => props.navigation.navigate('UserDetails', {item})}
+            >
+              <Image
+                source={{
+                  uri: `${BASE_URL}` + '/' + `${item.avater}`,
+                }}
+                style={styles.image}
+                resizeMode="cover"
+              />
+              <Text
+                style={{
+                  marginVertical: HP(1),
+                  color: 'black',
+                  fontWeight: 'bold',
+                }}
               >
-                <Image
-                  source={{
-                    uri: `${BASE_URL}` + '/' + `${item.avater}`,
-                  }}
-                  style={styles.image}
-                  resizeMode="cover"
-                />
-                <Text
-                  style={{
-                    marginVertical: HP(1),
-                    color: 'black',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {item.first_name} {item.last_name} ({'Nigeria'})
-                </Text>
-                <Text style={{color: 'black', textTransform: 'capitalize'}}>
-                  Gender: {item.gender}
-                </Text>
-                <Text style={{color: 'black', textTransform: 'capitalize'}}>
-                  Verified:{' '}
-                  {item.verified == 0 ? (
-                    'not yet'
-                  ) : (
-                    <MaterialIcons name="verified" size={12} />
-                  )}
-                </Text>
-              </TouchableOpacity>
-            )
+                {item.first_name} {item.last_name} ({'Nigeria'})
+              </Text>
+              <Text style={{color: 'black', textTransform: 'capitalize'}}>
+                Gender: {item.gender == '4525' ? 'Male' : 'Female'}
+              </Text>
+              <Text style={{color: 'black', textTransform: 'capitalize'}}>
+                Verified:{' '}
+                {item.verified == 0 ? (
+                  'not yet'
+                ) : (
+                  <MaterialIcons name="verified" size={12} />
+                )}
+              </Text>
+            </TouchableOpacity>
           )}
         />
       </View>

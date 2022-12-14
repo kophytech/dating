@@ -35,7 +35,7 @@ function BottomStack() {
         component={People}
         options={{
           tabBarLabel: 'People',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({focused, color, size}) => (
             <Entypo name="location-pin" size={32} color={COLOR.green} />
           ),
         }}
@@ -46,13 +46,21 @@ function BottomStack() {
         component={Discover}
         options={{
           tabBarLabel: 'Discover',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="cards-heart-outline"
-              size={32}
-              color={COLOR.green}
-            />
-          ),
+          tabBarIcon: ({focused, color, size}) =>
+            focused ? (
+              <MaterialCommunityIcons
+                name="cards-heart"
+                size={32}
+                color={COLOR.green}
+              />
+            ) : (
+              //
+              <MaterialCommunityIcons
+                name="cards-heart-outline"
+                size={32}
+                color={COLOR.green}
+              />
+            ),
         }}
       />
       <Tab.Screen
@@ -60,13 +68,16 @@ function BottomStack() {
         component={ChatStack}
         options={{
           tabBarLabel: 'Message',
-          tabBarIcon: ({color, size}) => (
-            <Ionicons
-              name="chatbox-ellipses-outline"
-              size={32}
-              color={COLOR.green}
-            />
-          ),
+          tabBarIcon: ({focused, color, size}) =>
+            focused ? (
+              <Ionicons name="chatbox-ellipses" size={32} color={COLOR.green} />
+            ) : (
+              <Ionicons
+                name="chatbox-ellipses-outline"
+                size={32}
+                color={COLOR.green}
+              />
+            ),
         }}
       />
 
@@ -75,9 +86,12 @@ function BottomStack() {
         component={Index}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="person" size={size} color={COLOR.green} />
-          ),
+          tabBarIcon: ({focused, color, size}) =>
+            focused ? (
+              <Ionicons name="person" size={size} color={COLOR.green} />
+            ) : (
+              <Ionicons name="person-outline" size={size} color={COLOR.green} />
+            ),
         }}
       />
     </Tab.Navigator>

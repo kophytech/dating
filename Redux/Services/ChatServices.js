@@ -11,9 +11,15 @@ const chatWithOtherServices = data => {
   });
 };
 
+const sendMessageServices = data => {
+  return instance.post(`/send-message`,data).then(response => {
+    return response.data;
+  });
+};
 const ChatService = {
   previousMessages,
   chatWithOtherServices,
+  sendMessageServices,
 };
 
 export default ChatService;

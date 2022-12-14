@@ -19,12 +19,11 @@ const RootNavgiation = () => {
         headerShown: false,
       }}
     >
-      {/* <Stack.Screen name="Splash" component={Splash} />
+      <Stack.Screen name="Splash" component={Splash} />
       <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-      <Stack.Screen name="EditProfile" component={EditProfile} /> */}
-      {/*/}
-      {/**/}
-      {/* <Stack.Screen name="Auth" component={AuthStack} /> */}
+      <Stack.Screen name="EditProfile" component={EditProfile} />
+     
+      <Stack.Screen name="Auth" component={AuthStack} />
       <Stack.Screen name="Bottom" component={BottomStack} />
       <Stack.Screen name="GoProSCreen" component={Proscreen} />
       <Stack.Screen name="Filter" component={FilterScreen} />

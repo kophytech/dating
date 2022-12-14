@@ -22,9 +22,6 @@ const UserDetails = props => {
     },
   } = props;
 
-  console.log('====================================');
-  console.log(item);
-  console.log('====================================');
   const onLike = () => {
     console.log(item.id, '99999');
     setLoading(true);
@@ -32,15 +29,13 @@ const UserDetails = props => {
     dispatch(LikeServices(item.id))
       .unwrap()
       .then(respnse => {
-        console.log('====================================');
-        console.log(response);
-        console.log('====================================');
         setliked(true);
         setLoading(false);
         showMessage({
           message: 'User Like Succesfully',
-          type: 'info',
+          type: 'danger',
         });
+        props.navigation.goBack();
       })
       .catch(err => {
         // console.log(err, 'error');
@@ -50,24 +45,21 @@ const UserDetails = props => {
       });
   };
 
-  const onDiskLike = () => {
+  const onDiskLike = items => {
     setLoading(true);
     setliked(false);
-    dispatch(dislikeServices(item.id))
+    dispatch(dislikeServices(items.id))
       .unwrap()
-      .then(respnse => {
-        console.log('====================================');
-        console.log(response);
-        console.log('====================================');
+      .then(response => {
         setliked(false);
-        setLoading(false);
         showMessage({
-          message: 'User Like Succesfully',
-          type: 'info',
+          message: 'Disliked Successfully',
+          type: 'danger',
         });
+        props.navigation.goBack();
       })
       .catch(err => {
-        // console.log(err, 'error');
+        console.log(err, 'error');
 
         setliked(true);
         setLoading(false);
@@ -103,7 +95,7 @@ const UserDetails = props => {
         /> */}
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => onDiskLike(item)}>
           <Entypo name="cross" size={32} color={COLOR.blackColor} />
         </TouchableOpacity>
         <TouchableOpacity
@@ -163,7 +155,7 @@ const styles = StyleSheet.create({
   iconText: {
     fontWeight: 'bold',
     color: COLOR.blackColor,
-    top: HP(0.6),
+    top: HP(2),
     left: WP(4),
     fontSize: WP(4),
   },

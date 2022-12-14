@@ -15,7 +15,11 @@ const ChatHeader = props => {
     <View style={styles.ChatHeader}>
       <View style={styles.chat}>
         <TouchableOpacity onPress={() => navigation.replace('Bottom')}>
-          <Ionicons name="arrow-back-sharp" size={32} />
+          <Ionicons
+            name="arrow-back-sharp"
+            size={32}
+            color={COLOR.blackColor}
+          />
         </TouchableOpacity>
         <View style={styles.details}>
           <FastImage
@@ -28,7 +32,7 @@ const ChatHeader = props => {
 
           <View style={styles.nameCon}>
             <Text style={styles.name}>{props?.item?.first_name}</Text>
-            <Text>
+            <Text style={{color: COLOR.blackColor}}>
               Online - Last seen,{' '}
               {moment(props?.item?.lastseen, 'YYYYMMDD').fromNow()}
             </Text>

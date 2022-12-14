@@ -67,17 +67,10 @@ const Index = props => {
             </Text>
           </TouchableOpacity>
 
-          <Text style={styles.aboutMe}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
-          </Text>
+          <Text style={styles.aboutMe}>{profile.about}</Text>
           <View style={styles.hobieContainer}>
-            <Text style={styles.header}>Hobbie</Text>
-            <Text style={styles.hobText}>
-              Computer Programming, Archery, Drawing, Chess, Poetry
-            </Text>
+            <Text style={styles.header}>Hobby</Text>
+            <Text style={styles.hobText}>{profile.about}</Text>
           </View>
         </View>
       </View>

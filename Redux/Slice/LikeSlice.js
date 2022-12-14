@@ -1,25 +1,28 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import LikingService from '../Services/LikeServices';
 
-export const LikeServices = createAsyncThunk('Liking/liked', async thunkAPI => {
-  try {
-    return await LikingService.likePerson(id);
-  } catch (error) {
-    console.log(error, 'er11ro11r');
-    const {message} = error;
-    console.log(error.response.data || message);
+export const LikeServices = createAsyncThunk(
+  'Liking/liked',
+  async (id, thunkAPI) => {
+    try {
+      return await LikingService.likePerson(id);
+    } catch (error) {
+      console.log(error, 'er11ro11r');
+      const {message} = error;
+      console.log(error.response.data || message);
 
-    // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
+      // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
 
-    return thunkAPI.rejectWithValue(
-      error.response.data.error[0].msg || message,
-    );
-  }
-});
+      return thunkAPI.rejectWithValue(
+        error.response.data.error[0].msg || message,
+      );
+    }
+  },
+);
 
 export const dislikeServices = createAsyncThunk(
   'Liking/liked',
-  async thunkAPI => {
+  async (id, thunkAPI) => {
     try {
       return await LikingService.dislikelikePerson(id);
     } catch (error) {

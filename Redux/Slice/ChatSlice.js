@@ -19,7 +19,7 @@ export const getPrevious = createAsyncThunk('Liking/liked', async thunkAPI => {
 
 export const chatWithOtherUser = createAsyncThunk(
   'Liking/liked',
-  async(data, thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
       return await ChatService.chatWithOtherServices(data);
     } catch (error) {
@@ -37,6 +37,28 @@ export const chatWithOtherUser = createAsyncThunk(
     }
   },
 );
+
+export const sendMessage = createAsyncThunk(
+  'Liking/sendMessageServices',
+  async (data, thunkAPI) => {
+    try {
+      return await ChatService.sendMessageServices(data);
+    } catch (error) {
+      console.log('====================================');
+      console.log(error, 'backend error');
+      console.log('====================================');
+      const {message} = error;
+      console.log(error.response.data || message);
+
+      // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
+
+      return thunkAPI.rejectWithValue(
+        error.response.data.error[0].msg || message,
+      );
+    }
+  },
+);
+
 const initialState = {
   chat: [],
   isError: false,
@@ -45,7 +67,7 @@ const initialState = {
   message: '',
 };
 
-const materialSlice = createSlice({
+const ChatSlice = createSlice({
   name: 'Chat',
   initialState,
   extraReducers: {
@@ -63,11 +85,25 @@ const materialSlice = createSlice({
       state.message = action.payload;
     },
 
-    [getPrevious.pending]: (state, action) => {
+    [sendMessage.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [sendMessage.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.chat = action.payload;
+    },
+    [sendMessage.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload;
+    },
+
+    [sendMessage.pending]: (state, action) => {
       state.isLoading = true;
     },
   },
 });
 
-const {reducer} = getPrevious;
+const {reducer} = ChatSlice;
 export default reducer;

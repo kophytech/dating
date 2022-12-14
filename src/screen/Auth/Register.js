@@ -90,7 +90,7 @@ const Register = props => {
   return (
     <KeyboardAwareScrollView
       style={styles.container}
-      contentContainerStyle={{paddingBottom: HP(20)}}
+      contentContainerStyle={{paddingBottom: HP(5)}}
     >
       <Image source={IMAGE_BODY.major} style={styles.img} />
       <View>
