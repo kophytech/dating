@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {COLOR, HP, IMAGE_BODY, WP} from '../../utils/theme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -7,12 +7,18 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {BASE_URL} from '../../../Redux/Services/ApiServices';
 import FastImage from 'react-native-fast-image';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import LikingService from '../../../Redux/Services/LikeServices';
 import {showMessage} from 'react-native-flash-message';
 import {dislikeServices, LikeServices} from '../../../Redux/Slice/LikeSlice';
+import {PeopleILiked} from '../../../Redux/Slice/ProfileSlice';
 
 const UserDetails = props => {
+  const PeopleILike = useSelector(state => state?.profile?.peopleILiked);
+
+  const getAge = birthDate =>
+    Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e10);
+
   const dispatch = useDispatch();
   const [liked, setliked] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -32,8 +38,8 @@ const UserDetails = props => {
         setliked(true);
         setLoading(false);
         showMessage({
-          message: 'User Like Succesfully',
-          type: 'danger',
+          message: 'User Liked Succesfully',
+          type: 'green',
         });
         props.navigation.goBack();
       })
@@ -53,7 +59,7 @@ const UserDetails = props => {
       .then(response => {
         setliked(false);
         showMessage({
-          message: 'Disliked Successfully',
+          message: `You Disliked ${item?.username}  Successfully`,
           type: 'danger',
         });
         props.navigation.goBack();
@@ -66,6 +72,18 @@ const UserDetails = props => {
       });
   };
 
+  useEffect(() => {
+    dispatch(PeopleILiked())
+      .unwrap()
+      .then(response => {
+        console.log('====================================');
+        console.log(response);
+        console.log('====================================');
+      });
+  }, []);
+
+  let AlreadyLikedAUser = PeopleILike.some(x => x.id === item.id);
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -74,11 +92,9 @@ const UserDetails = props => {
       >
         <Ionicons
           name="ios-arrow-back-outline"
-          size={42}
+          size={32}
           color={COLOR.blackColor}
         />
-
-        <Text style={styles.iconText}>Back</Text>
       </TouchableOpacity>
       <View style={{alignSelf: 'center', bottom: HP(3)}}>
         <FastImage
@@ -91,21 +107,28 @@ const UserDetails = props => {
         {/* <Image
           source={{uri: `${BASE_URL}/${item?.avater}`}}
           style={styles.img}
-          resizeMode="cover"
+        resizeMode="cover"
         /> */}
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={() => onDiskLike(item)}>
-          <Entypo name="cross" size={32} color={COLOR.blackColor} />
+          <Entypo name="cross" size={22} color={COLOR.blackColor} />
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.heart, liked == true && {backgroundColor: 'red'}]}
+          style={[
+            styles.heart,
+            // liked || (AlreadyLikedAUser == true && {backgroundColor: 'red'}),
+          ]}
           onPress={() => onLike()}
         >
           <Entypo
-            name="heart-outlined"
+            name={
+              liked || AlreadyLikedAUser == true ? 'heart' : 'heart-outlined'
+            }
             size={32}
-            color={liked == true ? COLOR.whiteColor : COLOR.blackColor}
+            color={
+              liked || AlreadyLikedAUser == true ? COLOR.red : COLOR.blackColor
+            }
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -123,7 +146,7 @@ const UserDetails = props => {
           {item.first_name + ' ' + item.last_name}
         </Text>
         <Text style={styles.gender}>
-          {item.gender == '4525' ? 'Male' : 'Female'}, 20
+          {item.gender == '4525' ? 'Male' : 'Female'}, {getAge(item?.birthday)}
         </Text>
 
         {item?.about && (
@@ -167,7 +190,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   heart: {
-    backgroundColor: 'lightgrey',
+    // backgroundColor: 'lightgrey',
     padding: WP(2),
     borderRadius: 10,
     bottom: HP(1),
@@ -180,6 +203,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     fontSize: WP(7),
+    textAlign: 'center',
   },
   gender: {
     color: 'black',
@@ -190,7 +214,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: WP(3),
-    top: HP(3),
+    top: HP(1),
     flexDirection: 'row',
   },
   aboutText: {

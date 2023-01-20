@@ -2,6 +2,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Splash from '../screen/Auth/Splash';
 import ChatScreen from '../screen/Chat/ChatScreen';
 import FilterScreen from '../screen/Filter/FilterScreen';
+import NotificationScreen from '../screen/Notification/NotificationScreen';
 import OnboardingScreen from '../screen/Onboarding/OnboardingScreen';
 import Proscreen from '../screen/PRO/Proscreen';
 import BootProfile from '../screen/Profile/BootProfile';
@@ -19,18 +20,19 @@ const RootNavgiation = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Splash" component={Splash} />
-      <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-      <Stack.Screen name="EditProfile" component={EditProfile} />
-     
+      {/* <Stack.Screen name="Splash" component={Splash} /> */}
       <Stack.Screen name="Auth" component={AuthStack} />
       <Stack.Screen name="Bottom" component={BottomStack} />
+
+      <Stack.Screen name="notification" component={NotificationScreen} />
+      <Stack.Screen name="Onboarding" component={OnboardingScreen} />
       <Stack.Screen name="GoProSCreen" component={Proscreen} />
       <Stack.Screen name="Filter" component={FilterScreen} />
       <Stack.Screen name="UserDetails" component={UserDetails} />
       <Stack.Screen name="BootYourProfile" component={BootProfile} />
       <Stack.Screen name="ChatMessaging" component={ChatScreen} />
       <Stack.Screen name="SuccessSCreen" component={SuccessScreen} />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
     </Stack.Navigator>
   );
 };

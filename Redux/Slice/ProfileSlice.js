@@ -2,8 +2,6 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import profileService from '../Services/ProfileServices';
 import randomService from '../Services/RandomServices';
 
-import StepService from '../Services/StepService';
-
 export const profileSlice = createAsyncThunk(
   'material/profile',
   async thunkAPI => {
@@ -11,6 +9,7 @@ export const profileSlice = createAsyncThunk(
       return await profileService.profilePerson();
     } catch (error) {
       const {message} = error;
+      
       return thunkAPI.rejectWithValue(
         error.response.data.error[0].msg || message,
       );
@@ -21,7 +20,7 @@ export const profileSlice = createAsyncThunk(
 // Payment
 
 export const PaymentSlice = createAsyncThunk(
-  'material/step2',
+  'material/payment',
   async (data, thunkAPI) => {
     try {
       return await profileService.Payment(data);
@@ -42,7 +41,7 @@ export const PaymentSlice = createAsyncThunk(
 );
 
 export const getMembershipPriceSlice = createAsyncThunk(
-  'material/step2',
+  'material/membership',
   async (data, thunkAPI) => {
     try {
       return await profileService.getMembershipPrice(data);
@@ -61,7 +60,7 @@ export const getMembershipPriceSlice = createAsyncThunk(
 // getCreditPayment
 
 export const creditPaymentSlice = createAsyncThunk(
-  'material/step2',
+  'material/credit',
   async (data, thunkAPI) => {
     try {
       return await profileService.creditPayment(data);
@@ -82,7 +81,7 @@ export const creditPaymentSlice = createAsyncThunk(
 );
 
 export const PaystackSlice = createAsyncThunk(
-  'material/step2',
+  'material/paystack',
   async (data, thunkAPI) => {
     try {
       return await profileService.paystack_get_ref(data);
@@ -102,9 +101,94 @@ export const PaystackSlice = createAsyncThunk(
   },
 );
 
-// paystack_get_ref
+export const AllNotificationMessages = createAsyncThunk(
+  'material/message',
+  async (data, thunkAPI) => {
+    try {
+      return await profileService.getAllNotifications();
+    } catch (error) {
+      console.log('====================================');
+      console.log(error.response.data, 'eeererer');
+      console.log('====================================');
+      const {message} = error;
+      // console.log(error.response.data || message)
 
-// creditPayment
+      // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
+
+      return thunkAPI.rejectWithValue(
+        error.response.data.error[0].msg || message,
+      );
+    }
+  },
+);
+
+export const PeopleILiked = createAsyncThunk(
+  'material/people',
+  async (data, thunkAPI) => {
+    try {
+      return await profileService.getPeopleILikedService();
+    } catch (error) {
+      console.log('====================================');
+      console.log('====================================');
+      const {message} = error;
+      // console.log(error.response.data || message)
+
+      // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
+
+      return thunkAPI.rejectWithValue(
+        error.response.data.error[0].msg || message,
+      );
+    }
+  },
+);
+
+export const getCountry = createAsyncThunk(
+  'material/country',
+  async (data, thunkAPI) => {
+    try {
+      return await profileService.getCountryServices();
+    } catch (error) {
+      const {message} = error;
+      return thunkAPI.rejectWithValue(error.response.data.error || message);
+    }
+  },
+);
+
+export const getCountryState = createAsyncThunk(
+  'material/country',
+  async (data, thunkAPI) => {
+    try {
+      return await profileService.getCountryStateServices(data);
+    } catch (error) {
+      console.log('====================================');
+      console.log(error.response);
+      console.log('====================================');
+      const {message} = error;
+      return thunkAPI.rejectWithValue(error.response.data.error || message);
+    }
+  },
+);
+
+export const updateProfileSlice = createAsyncThunk(
+  'material/payment',
+  async (data, thunkAPI) => {
+    try {
+      return await profileService.updateProfileService(data);
+    } catch (error) {
+      console.log('====================================');
+      console.log(error, 'eeererer');
+      console.log('====================================');
+      const {message} = error;
+      // console.log(error.response.data || message)
+
+      // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
+
+      return thunkAPI.rejectWithValue(error.response.data || message);
+    }
+  },
+);
+
+// getCountryState
 
 const initialState = {
   profile: [],
@@ -113,10 +197,14 @@ const initialState = {
   isLoading: false,
   message: '',
   creditList: [],
+  error: {},
+  country: [],
+  stateCountry: [],
+  peopleILiked: [],
 };
 
-const materialSlice = createSlice({
-  name: 'material',
+const profileSlices = createSlice({
+  name: 'profile',
   initialState,
   extraReducers: {
     [profileSlice.pending]: (state, action) => {
@@ -169,9 +257,47 @@ const materialSlice = createSlice({
       state.message = action.payload;
     },
 
-    // getMembershipPriceSlice
+    [getCountry.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [getCountry.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.country = action.payload;
+    },
+    [getCountry.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = action.payload;
+    },
+    // getCountryState,
+    [getCountryState.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [getCountryState.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.stateCountry = action.payload;
+    },
+    [getCountryState.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = action.payload;
+    },
+
+    [PeopleILiked.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [PeopleILiked.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.peopleILiked = action.payload;
+    },
+    [PeopleILiked.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = action.payload;
+    },
   },
 });
 
-const {reducer} = profileSlice;
+const {reducer} = profileSlices;
 export default reducer;

@@ -6,8 +6,16 @@ import Icon from 'react-native-vector-icons/Entypo';
 import FormButton from '../../component/FormButton';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import preferences from '../../utils/preferences';
+import {useDispatch, useSelector} from 'react-redux';
+import {profileSlice} from '../../../Redux/Slice/ProfileSlice';
 
 const Splash = () => {
+  const country = useSelector(state => state);
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(profileSlice());
+  }, [dispatch]);
+
   useEffect(() => {
     preferences
       ._getItem('onboarding')
@@ -63,7 +71,7 @@ const Splash = () => {
         }
       })
       .catch(error => {
-        console.log(error,'911');
+        console.log(error, '911');
       });
   }, []);
 

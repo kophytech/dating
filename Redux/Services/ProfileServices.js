@@ -31,12 +31,46 @@ const paystack_get_ref = data => {
   });
 };
 
+const getAllNotifications = data => {
+  return instance.get('/notifications').then(response => {
+    return response.data;
+  });
+};
+
+const getPeopleILikedService = data => {
+  return instance.get('/actions/i-liked').then(response => {
+    return response.data;
+  });
+};
+
+const getCountryServices = data => {
+  return instance.get('/provinces/countries').then(response => {
+    return response.data;
+  });
+};
+
+const getCountryStateServices = data => {
+  return instance.get(`/provinces/states/${data}`).then(response => {
+    return response.data;
+  });
+};
+
+const updateProfileService = data => {
+  return instance.post('/update/profile', data).then(response => {
+    return response.data;
+  });
+};
 const profileService = {
   profilePerson,
   Payment,
   creditPayment,
   getMembershipPrice,
   paystack_get_ref,
+  getAllNotifications,
+  getPeopleILikedService,
+  getCountryServices,
+  getCountryStateServices,
+  updateProfileService,
 };
 
 export default profileService;

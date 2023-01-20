@@ -6,13 +6,13 @@ import AuthService from '../Services/AuthService';
 
 export const register = createAsyncThunk(
   'auth/register',
-  async (userData, thunkAPI) => {
+async (userData, thunkAPI) => {
     try {
       const response = await AuthService.register(userData);
       // console.log(response, 'response');
       return response.data;
     } catch (error) {
-      // console.log(error, 'from register');
+     console.log(error, 'from register');
       const {message} = error;
       // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
       return thunkAPI.rejectWithValue(error.response.data || message);
@@ -28,13 +28,23 @@ export const login = createAsyncThunk('/auth/login', async (user, thunkAPI) => {
     console.log(error, 'from login');
     console.log('====================================');
     const {message} = error;
-    // console.log(error.response.data || message)
-
-    // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
-
     return thunkAPI.rejectWithValue(error.response.data || message);
   }
 });
+
+export const forgotPassword = createAsyncThunk(
+  '/auth/login',
+  async (user, thunkAPI) => {
+    try {
+      return await AuthService.forgot_password_api(user);
+    } catch (error) {
+      console.log('====================================');
+      console.log('====================================');
+      const {message} = error;
+      return thunkAPI.rejectWithValue(error.response.data || message);
+    }
+  },
+);
 
 export const ResetPasswordAction = createAsyncThunk(
   'auth/reset_password',

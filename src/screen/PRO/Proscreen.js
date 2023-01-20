@@ -15,6 +15,7 @@ import {
   PaystackSlice,
 } from '../../../Redux/Slice/ProfileSlice';
 import {showMessage} from 'react-native-flash-message';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {WebView} from 'react-native-webview';
 
@@ -25,7 +26,7 @@ const Proscreen = props => {
   const [selectPlan, setSelectPlan] = useState({});
 
   console.log('====================================');
-  console.log(selectPlan?.public_key, '123');
+  console.log(listofCredit, '12ed3');
   console.log('====================================');
 
   React.useEffect(() => {
@@ -40,6 +41,9 @@ const Proscreen = props => {
     dispatch(PaystackSlice(data))
       .unwrap()
       .then(item => {
+        console.log('====================================');
+        console.log(item, '11232323');
+        console.log('====================================');
         setSelectPlan(item);
       })
       .catch(err => {
@@ -53,22 +57,37 @@ const Proscreen = props => {
   if (Object.keys(selectPlan).length > 0) {
     return (
       <View style={{flex: 1}}>
-        <WebView
-          source={{uri: 'https://checkout.paystack.com/tk81m1jwys4652x'}}
-        />
+        <WebView source={{uri: selectPlan?.data?.authorization_url}} />
       </View>
     );
   }
 
-  console.log('====================================');
-  console.log(selectPlan);
-  console.log('====================================');
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={{paddingBottom: WP(80)}}
     >
-      <Text style={styles.headerText}>BUY CREDIT</Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          right: WP(10),
+          top: HP(2),
+        }}
+      >
+        <TouchableOpacity onPress={() => props.navigation.goBack()}>
+          <Ionicons
+            name="arrow-back-sharp"
+            color={COLOR.blackColor}
+            size={32}
+            style={{bottom: 4}}
+          />
+        </TouchableOpacity>
+
+        <View>
+          <Text style={styles.headerText}>BUY CREDIT</Text>
+        </View>
+      </View>
       <View style={styles.subContainer}>
         <View style={styles.ListData}>
           <View style={styles.list}>
@@ -88,14 +107,14 @@ const Proscreen = props => {
 
         <View style={styles.ListData}>
           <View style={styles.list}>
-            <Text style={styles.header}>Yearly Plan</Text>
-            <Image source={IMAGE_BODY.pot} style={styles.img} />
+            <Text style={styles.header}>Quartely Plan</Text>
+            <Image source={IMAGE_BODY.gold} style={styles.img} />
             <Text style={styles.price}>
-              &#8358;{listofCredit?.anually_pro_plan}
+              &#8358;{listofCredit?.quaterly_pro_plan}
             </Text>
             <TouchableOpacity
               style={styles.pay}
-              onPress={() => onSubmit('anually_pro_plan')}
+              onPress={() => onSubmit('quaterly_pro_plan')}
             >
               <Text style={styles.text}>pay</Text>
             </TouchableOpacity>
@@ -104,13 +123,30 @@ const Proscreen = props => {
 
         <View style={styles.ListData}>
           <View style={styles.list}>
+            <Text style={styles.header}>Bimonthly Plan</Text>
             <Image source={IMAGE_BODY.gold} style={styles.img} />
             <Text style={styles.price}>
-              &#8358;{listofCredit?.chest_of_credits?.price}
+              &#8358;{listofCredit?.binary_pro_plan}
             </Text>
             <TouchableOpacity
               style={styles.pay}
-              onPress={() => onSubmit(listofCredit?.chest_of_credits?.price)}
+              onPress={() => onSubmit('binary_pro_plan')}
+            >
+              <Text style={styles.text}>pay</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.ListData}>
+          <View style={styles.list}>
+            <Text style={styles.header}>Yearly Plan</Text>
+            <Image source={IMAGE_BODY.pot} style={styles.img} />
+            <Text style={styles.price}>
+              &#8358;{listofCredit?.anually_pro_plan}
+            </Text>
+            <TouchableOpacity
+              style={styles.pay}
+              onPress={() => onSubmit('anually_pro_plan')}
             >
               <Text style={styles.text}>pay</Text>
             </TouchableOpacity>
@@ -133,7 +169,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: WP(5),
-    top: HP(4),
+    right: 20,
   },
   subContainer: {
     top: HP(10),
@@ -159,6 +195,7 @@ const styles = StyleSheet.create({
     fontSize: WP(7),
     top: HP(3),
     textAlign: 'center',
+    color: 'black',
   },
   text: {
     fontSize: WP(5),

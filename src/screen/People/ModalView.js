@@ -17,7 +17,7 @@ const ModalView = ({user}) => {
       .unwrap()
       .then(response => {
         showMessage({
-          message: 'User Like Successfullyy',
+          message: 'User Liked Successfullyy',
           type: 'info',
         });
       })

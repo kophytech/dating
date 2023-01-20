@@ -19,6 +19,7 @@ import {BASE_URL} from '../../../Redux/Services/ApiServices';
 const Discover = props => {
   const dispatch = useDispatch();
   const [random, setRandom] = React.useState([]);
+  const [loading, setLoading] = useState(false);
   React.useEffect(() => {
     dispatch(randomSlice())
       .unwrap()
@@ -30,6 +31,9 @@ const Discover = props => {
       });
   }, []);
 
+  const getAge = birthDate =>
+    Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e10);
+
   return (
     <View style={styles.container}>
       <View
@@ -38,7 +42,7 @@ const Discover = props => {
           flexDirection: 'row',
           left: 10,
           justifyContent: 'space-between',
-          width: WP(95),
+          width: WP(90),
         }}
       >
         <TouchableOpacity onPress={() => props.navigation.goBack()}>
@@ -51,11 +55,11 @@ const Discover = props => {
           </Text>
         </View>
         <TouchableOpacity>
-          <Entypo name="dots-three-vertical" size={28} color={'black'} />
+          {/* <Entypo name="dots-three-vertical" size={28} color={'black'} /> */}
         </TouchableOpacity>
       </View>
 
-      <View>
+      <View style={{top:30}}>
         <FlatList
           data={random}
           numColumns={2}
@@ -63,38 +67,55 @@ const Discover = props => {
           contentContainerStyle={{paddingBottom: HP(60), paddingLeft: 11}}
           style={{paddingLeft: 1}}
           renderItem={({item}) => (
-            <TouchableOpacity
-              style={{top: HP(8), width: WP(52), marginTop: WP(3)}}
-              onPress={() => props.navigation.navigate('UserDetails', {item})}
-            >
-              <Image
-                source={{
-                  uri: `${BASE_URL}` + '/' + `${item.avater}`,
-                }}
-                style={styles.image}
-                resizeMode="cover"
-              />
-              <Text
+            console.log(item),
+            (
+              <TouchableOpacity
                 style={{
-                  marginVertical: HP(1),
-                  color: 'black',
-                  fontWeight: 'bold',
+                  top: HP(8),
+                  width: WP(40),
+                  marginTop: WP(3),
+                  borderWidth: 1,
+                  marginHorizontal: 10,
+                  padding: 3,
+                  height: 250,
+                  marginVertical: 30,
+                  borderColor: COLOR.lightGrey,
+                  borderRadius: 6,
                 }}
+                onPress={() => props.navigation.navigate('UserDetails', {item})}
               >
-                {item.first_name} {item.last_name} ({'Nigeria'})
-              </Text>
-              <Text style={{color: 'black', textTransform: 'capitalize'}}>
-                Gender: {item.gender == '4525' ? 'Male' : 'Female'}
-              </Text>
-              <Text style={{color: 'black', textTransform: 'capitalize'}}>
-                Verified:{' '}
-                {item.verified == 0 ? (
-                  'not yet'
-                ) : (
-                  <MaterialIcons name="verified" size={12} />
-                )}
-              </Text>
-            </TouchableOpacity>
+                <Image
+                  source={{
+                    uri: `${BASE_URL}` + '/' + `${item.avater}`,
+                  }}
+                  style={styles.image}
+                  resizeMode="cover"
+                />
+                <Text
+                  style={{
+                    marginVertical: HP(1),
+                    color: 'black',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {item.first_name} {item.last_name} {item?.city}
+                </Text>
+                <Text style={{color: 'black', textTransform: 'capitalize'}}>
+                  Gender: {item.gender == '4525' ? 'Male' : 'Female'}
+                </Text>
+                <Text style={{color: 'black', textTransform: 'capitalize'}}>
+                  Age: {getAge(item.birthday)}
+                </Text>
+                <Text style={{color: 'black', textTransform: 'capitalize'}}>
+                  Verified:{' '}
+                  {item.verified == 0 ? (
+                    'not yet'
+                  ) : (
+                    <MaterialIcons name="verified" size={12} />
+                  )}
+                </Text>
+              </TouchableOpacity>
+            )
           )}
         />
       </View>
@@ -110,7 +131,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.white,
   },
   image: {
-    height: HP(30),
-    width: WP(50),
+    height: HP(19),
+    width: WP(38.8),
+    bottom: 3,
+    right: 1,
   },
 });

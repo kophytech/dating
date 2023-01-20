@@ -23,7 +23,6 @@ const ChatIndex = props => {
   const [masterDataSource, setMasterDataSource] = useState([]);
 
   const searchFilterFunction = text => {
-    console.log(text, 'aldnakdnkankndk');
     // Check if searched text is not blank
     if (text) {
       const newData = listChat.filter(function (item) {
@@ -32,10 +31,8 @@ const ChatIndex = props => {
           : ''.toUpperCase();
 
         const textData = text.toUpperCase();
-
         return itemData.indexOf(textData) > -1;
       });
-
       setFilteredDataSource(newData);
       setSearch(text);
     } else {
@@ -46,8 +43,6 @@ const ChatIndex = props => {
     }
   };
 
-  console.log(filteredDataSource, 'filteredDataSourcefilteredDataSource');
-
   React.useEffect(() => {
     dispatch(getPrevious())
       .unwrap()
@@ -57,7 +52,6 @@ const ChatIndex = props => {
       .catch(err => {
         showMessage({
           message: 'Something went wrong',
-
           type: 'danger',
         });
       });
@@ -119,7 +113,9 @@ const ChatIndex = props => {
             renderItem={({item}) => {
               return (
                 <TouchableOpacity
-                  onPress={() => alert('dknakndkja')}
+                  onPress={() =>
+                    props.navigation.navigate('ChatMessaging', {item})
+                  }
                   style={{
                     flexDirection: 'row',
 
@@ -184,19 +180,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
     width: WP(90),
     left: WP(5),
-    
+    paddingLeft: WP(12),
+
     borderColor: COLOR.grey,
     borderRadius: WP(4),
   },
   time: {
-    color: 'black', 
+    color: 'black',
   },
   img: {
     width: WP(10),
     height: HP(5),
     top: HP(2),
   },
-  searchIcon: { 
+  searchIcon: {
     position: 'absolute',
     left: WP(10),
     zIndex: 200,

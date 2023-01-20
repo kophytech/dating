@@ -17,31 +17,14 @@ const AuthStack = () => {
         headerShown: false,
       }}
     >
-   
-       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
-
       <Stack.Screen name="Step1" component={Step1} />
       <Stack.Screen name="Step2" component={Step2} />
       <Stack.Screen name="Step3" component={Step3} />
+      <Stack.Screen name="Otp" component={Otp} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} />
-
-      {/*
-   
-      
-
-      
-      */}
-      <Stack.Screen name="Otp" component={Otp} />
-      {/* 
-      
-
-     
-
-    
-    */}
-      {/*  */}
     </Stack.Navigator>
   );
 };

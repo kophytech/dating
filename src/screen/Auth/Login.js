@@ -103,7 +103,7 @@ const Login = props => {
             text="Sign In"
             onPress={() => onSubmit()}
             loading={loading}
-            bg={COLOR.lightGrey}
+            bg={COLOR.green}
           />
         </View>
         <View style={styles.subButton}>

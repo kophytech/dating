@@ -77,7 +77,7 @@ const Step1 = props => {
     >
       <View style={{top: HP(10)}}>
         <View style={styles.image}>
-          <Image source={IMAGE_BODY.main} />
+          <Image source={IMAGE_BODY.major} />
         </View>
         <Text
           style={{

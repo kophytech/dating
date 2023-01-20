@@ -6,8 +6,12 @@ import FormButton from '../../component/FormButton';
 import {useDispatch, useSelector} from 'react-redux';
 import Validator from 'validatorjs';
 import en from 'validatorjs/src/lang/en';
+import {forgotPassword, login} from '../../../Redux/Slice/AuthSlice';
 
-const ForgotPassword = () => {
+const ForgotPassword = props => {
+  console.log('====================================');
+  console.log(props);
+  console.log('====================================');
   const [errors, setError] = useState({});
   const dispatch = useDispatch();
 
@@ -23,7 +27,6 @@ const ForgotPassword = () => {
   };
 
   const onSubmit = async () => {
-
     let rules = {
       identifier: 'required|email',
     };
@@ -35,10 +38,15 @@ const ForgotPassword = () => {
     if (validation.fails()) {
       setError(validation.errors.all());
     } else {
-      dispatch(login(value))
+      dispatch(
+        forgotPassword({
+          email: value.identifier,
+        }),
+      )
         .unwrap()
         .then(data => {
-          console.log(data, '11111');
+          // ResetPassword
+          props.navigation.navigate('ResetPassword');
         })
         .catch(rejectedValueOrSerializedError => {
           console.log(rejectedValueOrSerializedError, 'rejecteddd');

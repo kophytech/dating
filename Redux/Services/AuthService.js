@@ -20,40 +20,14 @@ const login = userData => {
   });
 };
 
-const refreshTokenApi = async () => {
-  let tokens = await AsyncStorage.getItem('refreshToken');
-  return axios({
-    url:
-      'https://demo-server-quotesconnect.herokuapp.com/api/v1.1/client/login',
-    method: 'get',
-    headers: {
-      refreshToken:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTcwMWViMTZhYWUzNTJhYjZmOTVjYSIsImlhdCI6MTY1OTE5Mjc3OSwiZXhwIjoxNjYwNDAyMzc5fQ.PXMEIxpOeSeDIY9bBECD_goM9Q9wZPYZtsWd-bHjgQQ',
-      'Content-Type': 'application/json',
-    },
+const forgot_password_api = email => {
+  return axios.post(API_URL + '/forgot', email).then(response => {
+    console.log(response, 'reset password');
   });
-
-  // return axios({
-  //   method: 'get',
-  //   url: 'https://demo-server-quotesconnect.herokuapp.com/api/v1.1/client/login',
-  //   headers: {
-  //     refreshToken:
-  //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTcwMWViMTZhYWUzNTJhYjZmOTVjYSIsImlhdCI6MTY1OTE5MTM0MywiZXhwIjoxNjYwNDAwOTQzfQ.a03ryPoJJHHzgkhIjigGr2Br3JNssnrtgVH9DdIVSXA',
-  //   },
-  // });
-  // return axios.get(
-  //   API_URL + 'login',
-  //   {},
-  //   {
-  //     headers: {
-  //       refreshToken: tokens,
-  //     },
-  //   },
-  // );
 };
 
 const reset_password_api = email => {
-  return axios.post(API_URL + 'forgot', email).then(response => {
+  return axios.post(API_URL + '/reset', email).then(response => {
     console.log(response, 'reset password');
   });
 };
@@ -135,7 +109,7 @@ const AuthService = {
   uploadUserDetailsApi,
   UpdateVendorApi,
   deleteVendorApi,
-  refreshTokenApi,
+  forgot_password_api,
 };
 
 export default AuthService;

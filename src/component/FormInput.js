@@ -25,6 +25,7 @@ const FormInput = props => {
         keyboardType={props.keyboardType}
         placeholderTextColor="black"
         secureTextEntry={props.password == true && !showPassword}
+        maxLength={props?.maxLength}
       />
       {props.showIcon && (
         <>
@@ -32,7 +33,11 @@ const FormInput = props => {
             style={styles.eye}
             onPress={() => setShowPassword(!showPassword)}
           >
-            <Feather name={showPassword ? 'eye' : 'eye-off'} />
+            <Feather
+              name={showPassword ? 'eye' : 'eye-off'}
+              size={20}
+              color={COLOR.blackColor}
+            />
           </TouchableOpacity>
         </>
       )}
@@ -41,8 +46,8 @@ const FormInput = props => {
           <Animatable.Text
             animation={'bounceInDown'}
             style={{
-              left: WP(5),
-              bottom: HP(2),
+              left: WP(1),
+              bottom: HP(3.5),
               color: COLOR.red,
               marginVertical: HP(1),
               maxWidth: WP(80),
@@ -78,6 +83,6 @@ const styles = StyleSheet.create({
   eye: {
     alignSelf: 'flex-end',
     right: WP(6),
-    bottom: HP(6),
+    bottom: HP(7),
   },
 });

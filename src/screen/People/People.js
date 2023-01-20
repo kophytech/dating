@@ -6,29 +6,56 @@ import {
   TouchableOpacity,
   Flatlist,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {COLOR, HP, IMAGE_BODY, WP} from '../../utils/theme';
 // import InstaStory from 'react-native-insta-story';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch} from 'react-redux';
 import {randomSlice} from '../../../Redux/Slice/RandomSlice';
 import PeopleList from './PeopleList';
+import {
+  AllNotificationMessages,
+  PeopleILiked,
+} from '../../../Redux/Slice/ProfileSlice';
+import Entypo from 'react-native-vector-icons/Entypo';
+import moment from 'moment';
 
 const PeopleScreen = props => {
   const dispatch = useDispatch();
   const [people, setPeople] = React.useState([]);
+  const [notifyCount, setnotifyCount] = useState(0);
+  const [messages, setMessages] = useState([]);
+  const [peopleILiked, setpeopleILiked] = useState([]);
 
   React.useLayoutEffect(() => {
     dispatch(randomSlice())
       .unwrap()
       .then(response => {
-        console.log(response, '1200000000000000 ');
         setPeople(response);
       })
       .then(err => {
         console.log(err.response, 'e000000rro');
       });
   }, []);
+
+  React.useEffect(() => {
+    dispatch(AllNotificationMessages())
+      .unwrap()
+      .then(message => {
+        setnotifyCount(message?.new_notifications_count);
+        setMessages(message);
+      });
+  }, []);
+
+  React.useEffect(() => {
+    dispatch(PeopleILiked())
+      .unwrap()
+      .then(people => {
+        setpeopleILiked(people);
+      });
+  }, []);
+
+  // PeopleILiked
 
   return (
     <View style={styles.container}>
@@ -41,13 +68,30 @@ const PeopleScreen = props => {
             />
           </TouchableOpacity>
 
-          <Ionicons name="ios-notifications-outline" size={35} color="black" />
+          <TouchableOpacity
+            style={styles.notifyCount}
+            onPress={() =>
+              props.navigation.navigate('notification', {messages})
+            }
+          >
+            <Ionicons
+              name="ios-notifications-outline"
+              size={35}
+              color={notifyCount == 0 ? COLOR.blackColor : COLOR.green}
+            />
+            {/* {notifyCount == 0 ? null : ( */}
+            <Entypo
+              name="dot-single"
+              color={COLOR.green}
+              size={32}
+              style={styles.dot}
+            />
+            {/* )} */}
+          </TouchableOpacity>
         </View>
 
         <View style={styles.section2}>
-          <Text style={styles.sectionText2}>
-            Come on you beautiful hooman! Let’s go check on your Bonita
-          </Text>
+          <Text style={styles.sectionText2}>Let's go and find love</Text>
         </View>
         <View style={styles.section3}>
           {/* <InstaStory
@@ -118,6 +162,7 @@ const styles = StyleSheet.create({
     color: 'black',
     bottom: HP(12),
     left: WP(4),
+    color: COLOR.green,
   },
   section3: {
     left: WP(5),
@@ -135,5 +180,20 @@ const styles = StyleSheet.create({
   },
   people: {
     marginBottom: HP(6),
+  },
+  number: {
+    position: 'absolute',
+    left: WP(7),
+    fontSize: WP(5),
+    bottom: HP(2),
+    fontWeight: 'bold',
+    color: COLOR.blackColor,
+  },
+  notifyCount: {
+    left: WP(3),
+  },
+  dot: {
+    bottom: HP(6),
+    left: WP(4),
   },
 });

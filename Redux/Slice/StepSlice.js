@@ -21,7 +21,6 @@ export const step1Material = createAsyncThunk(
   },
 );
 
-
 export const step2Material = createAsyncThunk(
   'material/step2',
   async (data, thunkAPI) => {
@@ -50,7 +49,7 @@ export const step3Material = createAsyncThunk(
       return await StepService.postStep3Service(data);
     } catch (error) {
       console.log('====================================');
-      console.log(error);
+      console.log(error.response);
       console.log('====================================');
       const {message} = error;
       // console.log(error.response.data || message)

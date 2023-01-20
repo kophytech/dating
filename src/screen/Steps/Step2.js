@@ -11,9 +11,10 @@ import {COLOR, HP, IMAGE_BODY, WP} from '../../utils/theme';
 
 import MainButton from '../../component/MainButton';
 import * as ImagePicker from 'react-native-image-picker';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {step1Material, step2Material} from '../../../Redux/Slice/StepSlice';
 import FlashMessage from 'react-native-flash-message';
+import {getCountry} from '../../../Redux/Slice/ProfileSlice';
 
 const Step1 = props => {
   const [response, setResponse] = React.useState([]);
@@ -21,6 +22,11 @@ const Step1 = props => {
   const [type, setType] = React.useState('');
   const dispatch = useDispatch();
   const [loading, setLoading] = React.useState(false);
+  const state = useSelector(state => state);
+ 
+  React.useEffect(() => {
+    dispatch(getCountry());
+  }, []);
 
   const onButtonPress = () => {
     ImagePicker.launchCamera(
@@ -79,9 +85,9 @@ const Step1 = props => {
       contentContainerStyle={{paddingBottom: HP(50)}}
     >
       <View style={{top: HP(4)}}>
-        {/* <View style={styles.image}>
-          <Image source={IMAGE_BODY.main} />
-        </View> */}
+        <View style={styles.image}>
+          <Image source={IMAGE_BODY.major} />
+        </View>
         <Text
           style={{
             color: 'black',
