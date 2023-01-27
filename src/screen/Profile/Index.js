@@ -176,6 +176,7 @@ const Index = props => {
               </Text>
             )}
           </View>
+          
         </View>
       </View>
     </ScrollView>

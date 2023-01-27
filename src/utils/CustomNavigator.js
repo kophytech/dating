@@ -1,9 +1,13 @@
-import {createNavigationContainerRef} from '@react-navigation/native';
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 
-export const navigationRef = createNavigationContainerRef();
+const CustomNavigator = () => {
+  const navigation = useNavigation();
 
-export function navigate(name, params) {
-  if (navigationRef.isReady()) {
-    navigationRef.navigate(name, params);
-  }
-}
+  return {
+    navigation,
+  };
+};
+
+export default CustomNavigator;

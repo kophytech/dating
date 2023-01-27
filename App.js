@@ -19,18 +19,22 @@ import BottomStack from './src/navigation/Bottom/Index';
 import StepStack from './src/navigation/Stack/StepStack';
 import RootNavgiation from './src/navigation/RootNavgiation';
 import FlashMessage from 'react-native-flash-message';
+import {MenuProvider} from 'react-native-popup-menu';
+
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
 
 const App = () => {
   return (
     <Provider store={store}>
-      <PaperProvider>
-        <NavigationContainer>
-          <RootNavgiation />
-        </NavigationContainer>
-        <FlashMessage position="top" />
-      </PaperProvider>
+      <MenuProvider>
+        <PaperProvider>
+          <NavigationContainer>
+            <RootNavgiation />
+          </NavigationContainer>
+          <FlashMessage position="top" />
+        </PaperProvider>
+      </MenuProvider>
     </Provider>
   );
 };

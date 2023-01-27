@@ -9,7 +9,7 @@ export const profileSlice = createAsyncThunk(
       return await profileService.profilePerson();
     } catch (error) {
       const {message} = error;
-      
+
       return thunkAPI.rejectWithValue(
         error.response.data.error[0].msg || message,
       );
@@ -183,7 +183,26 @@ export const updateProfileSlice = createAsyncThunk(
 
       // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
 
-      return thunkAPI.rejectWithValue(error.response.data || message);
+      return thunkAPI.rejectWithValue(error || message);
+    }
+  },
+);
+
+export const blockUserSlice = createAsyncThunk(
+  'material/payment',
+  async (data, thunkAPI) => {
+    try {
+      return await profileService.blockUserService(data);
+    } catch (error) {
+      console.log('====================================');
+      console.log(error, 'eeererer');
+      console.log('====================================');
+      const {message} = error;
+      // console.log(error.response.data || message)
+
+      // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data
+
+      return thunkAPI.rejectWithValue(error || message);
     }
   },
 );

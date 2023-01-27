@@ -21,9 +21,8 @@ const RootNavgiation = () => {
       }}
     >
       {/* <Stack.Screen name="Splash" component={Splash} /> */}
-      <Stack.Screen name="Auth" component={AuthStack} />
+      {/* <Stack.Screen name="Auth" component={AuthStack} /> */}
       <Stack.Screen name="Bottom" component={BottomStack} />
-
       <Stack.Screen name="notification" component={NotificationScreen} />
       <Stack.Screen name="Onboarding" component={OnboardingScreen} />
       <Stack.Screen name="GoProSCreen" component={Proscreen} />

@@ -60,6 +60,13 @@ const updateProfileService = data => {
     return response.data;
   });
 };
+
+const blockUserService = data => {
+  return instance.post(`/block/${data?.id}`).then(response => {
+    return response.data;
+  });
+};
+
 const profileService = {
   profilePerson,
   Payment,
@@ -71,6 +78,7 @@ const profileService = {
   getCountryServices,
   getCountryStateServices,
   updateProfileService,
+  blockUserService,
 };
 
 export default profileService;

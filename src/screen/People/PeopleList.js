@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   name: {
     top: HP(2),
     left: WP(5),
-    
+  
     maxHeight: WP(40),
   },
   first_name: {

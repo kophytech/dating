@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   Flatlist,
+  PermissionsAndroid,
 } from 'react-native';
 import React, {useState} from 'react';
 import {COLOR, HP, IMAGE_BODY, WP} from '../../utils/theme';
@@ -16,9 +17,11 @@ import PeopleList from './PeopleList';
 import {
   AllNotificationMessages,
   PeopleILiked,
+  updateProfileSlice,
 } from '../../../Redux/Slice/ProfileSlice';
 import Entypo from 'react-native-vector-icons/Entypo';
 import moment from 'moment';
+import GetLocation from 'react-native-get-location';
 
 const PeopleScreen = props => {
   const dispatch = useDispatch();
@@ -26,6 +29,51 @@ const PeopleScreen = props => {
   const [notifyCount, setnotifyCount] = useState(0);
   const [messages, setMessages] = useState([]);
   const [peopleILiked, setpeopleILiked] = useState([]);
+  const [location, setLocation] = useState({});
+
+  const pickLocation = () => {
+    dispatch(
+      updateProfileSlice({
+        lat: location?.latitude,
+        lng: location.longitude,
+      }),
+    )
+      .unwrap()
+      .then(response => {
+        console.log('====================================');
+        console.log(response);
+        console.log('====================================');
+      })
+      .catch(error => {
+        console.log('====================================');
+        console.log(error, 'adee');
+        console.log('====================================');
+      });
+  };
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      GetLocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 15000,
+      })
+        .then(location => {
+          console.log('====================================');
+          console.log(location);
+          console.log('====================================');
+          setLocation(location);
+          pickLocation();
+        })
+        .catch(error => {
+          console.log('====================================');
+          console.log(error, 'ddddddddddddd');
+          console.log('====================================');
+          const {code, message} = error;
+        });
+    }, 1000);
+  }, []);
+
+  console.log(location);
 
   React.useLayoutEffect(() => {
     dispatch(randomSlice())
@@ -33,9 +81,7 @@ const PeopleScreen = props => {
       .then(response => {
         setPeople(response);
       })
-      .then(err => {
-        console.log(err.response, 'e000000rro');
-      });
+      .then(err => {});
   }, []);
 
   React.useEffect(() => {

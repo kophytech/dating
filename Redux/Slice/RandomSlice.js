@@ -33,7 +33,7 @@ export const filterSlice = createAsyncThunk(
         error.message ||
         error.toString();
 
-      console.log(message, '1111111111111');
+      
       // console.log(error.response.data || message)
 
       // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error.response.data

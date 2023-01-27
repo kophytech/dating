@@ -24,7 +24,6 @@ const Splash = () => {
           preferences
             ._getItem('user')
             .then(async session => {
-              console.log({session});
               if (session) {
                 navigation.dispatch({
                   ...CommonActions.reset({
@@ -64,14 +63,14 @@ const Splash = () => {
               }
             })
             .catch(error => {
-              console.log(error);
+              navigation.navigate('Auth');
             });
         } else {
-          navigation.navigate('Onboarding');
+          navigation.navigate('Auth');
         }
       })
       .catch(error => {
-        console.log(error, '911');
+        navigation.navigate('Auth');
       });
   }, []);
 

@@ -7,7 +7,6 @@ import {useNavigation} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import {BASE_URL} from '../../../Redux/Services/ApiServices';
 import moment from 'moment';
-import {updateProfileSlice} from '../../../Redux/Slice/ProfileSlice';
 import {useDispatch} from 'react-redux';
 
 // uri: `${BASE_URL}/${item.avater}`,
