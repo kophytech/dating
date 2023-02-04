@@ -58,14 +58,14 @@ const ChatHeader = props => {
 
           <View style={styles.nameCon}>
             <Text style={styles.name}>{props?.item?.first_name}</Text>
-            <Text style={{color: COLOR.blackColor}}>
+            {/* <Text style={{color: COLOR.blackColor}}>
               Online - Last seen,
               {moment(
                 moment(parseFloat(props?.item?.lastseen)).format('YYYYMMD'),
                 'YYYYMMDD',
-              ).fromNow()}
-              {/* {moment(String(props?.item?.lastseen), 'YYYY-MM-DD')} */}
-            </Text>
+              ).fromNow()} */}
+            {/* {moment(String(props?.item?.lastseen), 'YYYY-MM-DD')} */}
+            {/* </Text> */}
           </View>
         </View>
       </View>

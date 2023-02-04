@@ -11,6 +11,7 @@ import SuccessScreen from '../screen/Success/SuccessScreen';
 import UserDetails from '../screen/UserLikes/UserDetails';
 import BottomStack from './Bottom/Index';
 import AuthStack from './Stack/AuthStack';
+import TopNavigation from './TopNavigation/TopNavigation';
 
 const Stack = createStackNavigator();
 const RootNavgiation = () => {
@@ -20,8 +21,7 @@ const RootNavgiation = () => {
         headerShown: false,
       }}
     >
-      {/* <Stack.Screen name="Splash" component={Splash} /> */}
-      {/* <Stack.Screen name="Auth" component={AuthStack} /> */}
+      <Stack.Screen name="Auth" component={AuthStack} />
       <Stack.Screen name="Bottom" component={BottomStack} />
       <Stack.Screen name="notification" component={NotificationScreen} />
       <Stack.Screen name="Onboarding" component={OnboardingScreen} />

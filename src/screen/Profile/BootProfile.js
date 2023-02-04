@@ -18,7 +18,6 @@ const BootProfile = props => {
   const dispatch = useDispatch();
   const [profile, setProfile] = React.useState({});
   const [loading, setloading] = React.useState(false);
-  console.log(profile, '1232');
   React.useEffect(() => {
     dispatch(profileSlice())
       .unwrap()

@@ -39,14 +39,9 @@ const ChatScreen = props => {
       }),
     )
       .unwrap()
-      .then(response => {
-        console.log('====================================');
-        console.log(response, 'lnakdnkadnk');
-        console.log('====================================');
-      })
+      .then(response => {})
       .catch(error => {
         console.log('====================================');
-        console.log(error, 'adee');
         console.log('====================================');
       });
   };
@@ -69,7 +64,7 @@ const ChatScreen = props => {
       .then(item => {
         setChatList(item);
       });
-  }, []);
+  }, [dispatch, chatMessages]);
 
   const onSendMessage = () => {
     dispatch(
@@ -84,6 +79,9 @@ const ChatScreen = props => {
     setText('');
   };
 
+  console.log('====================================');
+  console.log(chatMessages, 'chatMessageschatMessages');
+  console.log('====================================');
   return (
     <>
       <View style={{flex: 1}}>

@@ -65,9 +65,6 @@ const Discover = props => {
     dispatch(PeopleILiked())
       .unwrap()
       .then(response => {
-        console.log('====================================');
-        console.log(response, '1111111');
-        console.log('====================================');
         setRandom(response);
       })
       .catch(err => {

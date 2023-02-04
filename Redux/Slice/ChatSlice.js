@@ -85,21 +85,21 @@ const ChatSlice = createSlice({
       state.message = action.payload;
     },
 
-    [sendMessage.pending]: (state, action) => {
+    [chatWithOtherUser.pending]: (state, action) => {
       state.isLoading = true;
     },
-    [sendMessage.fulfilled]: (state, action) => {
+    [chatWithOtherUser.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
       state.chat = action.payload;
     },
-    [sendMessage.rejected]: (state, action) => {
+    [chatWithOtherUser.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
     },
 
-    [sendMessage.pending]: (state, action) => {
+    [chatWithOtherUser.pending]: (state, action) => {
       state.isLoading = true;
     },
   },

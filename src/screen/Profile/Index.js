@@ -171,12 +171,11 @@ const Index = props => {
             )}
 
             {profile?.religion == 9 && (
-              <Text style={styles.hobText}>
+              <Texwt style={styles.hobText}>
                 {profile?.religion == 9 && 'Others'}
-              </Text>
+              </Texwt>
             )}
           </View>
-          
         </View>
       </View>
     </ScrollView>
@@ -227,7 +226,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.1,
     bottom: HP(25),
     elevation: 500,
-    height: HP(70),
+    height: HP(90),
     width: '100%',
     backgroundColor: COLOR.whiteColor,
     alignSelf: 'center',
@@ -257,6 +256,10 @@ const styles = StyleSheet.create({
     top: HP(7),
     left: WP(5),
     marginVertical: WP(2),
+    backgroundColor: '#cfcfdb',
+    width: WP(90),
+    maxHeight: WP(90),
+    padding: 20,
   },
   header: {
     color: COLOR.blackColor,

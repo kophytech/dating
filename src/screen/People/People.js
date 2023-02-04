@@ -66,7 +66,7 @@ const PeopleScreen = props => {
         })
         .catch(error => {
           console.log('====================================');
-          console.log(error, 'ddddddddddddd');
+          console.log(error,);
           console.log('====================================');
           const {code, message} = error;
         });
